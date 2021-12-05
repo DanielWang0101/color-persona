@@ -1,7 +1,7 @@
 import React from "react";
-import { Main } from "./styled-components";
+import ColorWheel from "./ColorWheel";
 const HomePage = () => {
-  return <Main></Main>;
+  return <ColorWheel />;
 };
 
 export default HomePage;

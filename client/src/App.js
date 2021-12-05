@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import Header from "./components/Header";
-import Profile from "./components/Header/Profile";
 import GlobalStyles from "./GlobalStyles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./components/Home";
@@ -18,7 +17,6 @@ function App() {
             <Route path="/explore" />
             <Route path="/libraries" />
           </Routes>
-          <Profile />
         </Main>
       </BrowserRouter>
     </>
