@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "https://github.com/DanielWang0101/color-persona.git",
   "author": "Daniel Wang <d.wang20161@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
