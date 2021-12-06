@@ -1,0 +1,83 @@
+const compColors = require("complementary-colors");
+const Color = require("color");
+// import compColors from "complementary-colors";
+// import Color from "color";
+const str1 = "#142814"; //#291529
+// const myColor = new compColors(str1);
+// const color = Color(myColor.complementary()[1]).hex();
+// console.log("🚀 ~ color", color);
+// "type": "module",
+export const getComplementaryColor = (color) => {
+  const myColor = new compColors(color);
+  //Self
+  const rgbS = myColor.primary()[0];
+  const rgbSArray = Color(myColor.primary()[0]).array();
+  //Complementary
+  const hex = Color(myColor.complementary()[1]).hex();
+  const rgb = myColor.complementary()[0];
+  const rgbArray = Color(myColor.complementary()[1]).array();
+  const result = {
+    complementary: { hex, rgb, rgbArray },
+    self: { hex: color, rgbS, rgbSArray },
+  };
+  console.log(result);
+  return result;
+};
+// export default getComplementaryColor;
+// export const getComplementaryColor = (req, res) => {
+//   try {
+//     const { color } = req.params;
+//     const myColor = new compColors(color);
+//     //Self
+//     const rgbS = myColor.primary()[0];
+//     const rgbSArray = Color(myColor.primary()[0]).array();
+//     //Complementary
+//     const hex = Color(myColor.complementary()[1]).hex();
+//     const rgb = myColor.complementary()[0];
+//     const rgbArray = Color(myColor.complementary()[1]).array();
+//     const result = {
+//       complementary: { hex, rgb, rgbArray },
+//       self: { hex: color, rgbS, rgbSArray },
+//     };
+//     return res.status(200).json({
+//       status: 200,
+//       data: result,
+//     });
+//   } catch (err) {
+//     return res.status(404).json({
+//       status: 404,
+//       message: err.message,
+//     });
+//   }
+// };
+// Todo 👇
+// const getTriadic = (color)=>{
+//     const myColor = new compColors(color);
+//     //Self
+//     const rgbS = myColor.primary()[0];
+//     const rgbSArray = Color(myColor.primary()[0]).array();
+//     //Triadic
+//     // First
+//     const hex = Color(myColor.complementary()[1]).hex();
+//     const rgb = myColor.complementary()[0];
+//     const rgbArray = Color(myColor.complementary()[1]).array();
+//     //Second
+//     const result = {
+//       triadic: { hex, rgb, rgbArray },
+//       self: { hex: color, rgbS, rgbSArray },
+//     };
+//     return result;
+// }
+// Todo 👆
+// const getComplementaryColor = (color = "") => {
+//   const colorPart = color.slice(1);
+//   const ind = parseInt(colorPart, 16);
+//   let iter = ((1 << (4 * colorPart.length)) - 1 - ind).toString(16);
+//   while (iter.length < colorPart.length) {
+//     iter = "0" + iter;
+//   }
+//   return "#" + iter;
+// };
+
+// module.exports = { getComplementaryColor };
+// export default getComplementaryColor;

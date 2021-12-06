@@ -1,37 +1,41 @@
 import React, { useEffect, useState } from "react";
 import iro from "@jaames/iro";
-const IroColorPicker = ({ input, setInput }) => {
+import { createDefaultWheel, createComplementaryWheel } from "./ColorRules";
+import { getComplementaryColor } from "./getColors/getComplementary.js";
+const IroColorPicker = ({ input, setInput, rule }) => {
   useEffect(() => {
-    const colorPicker = new iro.ColorPicker("#picker", {
-      width: 350,
-      colors: ["rgb(255, 0, 0)", "rgb(0, 255, 0)"],
-    });
-    const onChange = async (color) => {
-      try {
-        const colorNum = color.hexString.slice(1);
-        const response = await fetch(`/complementary/%23${colorNum}`);
-        const result = await response.json();
-        const feedBack = result.data;
-        colorPicker.colors[1].hexString = feedBack.complementary.hex;
+    if (rule === "Default") {
+      createDefaultWheel();
+    }
+    if (rule === "Complementary") {
+      const colorPicker = new iro.ColorPicker("#picker", {
+        width: 350,
+        colors: ["rgb(255, 0, 0)", "rgb(0, 255, 0)"],
+      });
+      colorPicker.on("input:change", (color) => {
+        onChange(color);
+        // colorPicker.off("color:change", onChange);
+      });
+      const onChange = (color) => {
+        const result = getComplementaryColor(color);
+        //Display the comple color on the wheel
+        colorPicker.colors[1].hexString = result.complementary.hex;
+        // Modify the text value indication on the screen
         setInput({
           ...input,
-          primary: colorPicker.colors[0].rgbString,
-          secondary: colorPicker.colors[1].rgbString,
+          primary: colorPicker.colors[0].hexString,
+          secondary: colorPicker.colors[1].hexString,
           // tertiary: colorPicker.colors[2].rgbString,
         });
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-    colorPicker.on("input:change", (color) => {
-      onChange(color);
-      // colorPicker.off("color:change", onChange);
-    });
-  }, []);
+        console.log(result);
+      };
+    }
+  }, [rule]); //Whenever the rule changed, a new instance will be created
 
   return (
     <>
-      <div id="picker"></div>
+      <div id="picker" key={rule}></div>
+      {/* Whenever the rule changed, the #picker DOM element get discard and recreated */}
     </>
   );
 };

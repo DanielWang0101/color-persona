@@ -1,30 +1,22 @@
-import React, { useState } from "react";
-import IroColorPicker from "./IroColorPicker";
+import React, { useState, useContext } from "react";
 import iro from "@jaames/iro";
+import IroColorPicker from "./IroColorPicker";
+import { ColorInputContext } from "../../Context/ColorInputsContext";
 
 const ColorWheel = () => {
-  const [input, setInput] = useState({
-    primary: "rgb(255, 0, 0)",
-    secondary: "rgb(0, 255, 0)",
-    tertiary: "rgb(0, 0, 255)",
-  });
-  const onColorChange = (colors) => {
-    // setInput({
-    //   ...input,
-    //   primary: colors[0].rgbString,
-    //   secondary: colors[1].rgbString,
-    //   tertiary: colors[2].rgbString,
-    // });
-    // console.log(colorPicker.colors);
-    // console.log(colors[1]);
-    // console.log(colors[2]);
-  };
+  const { input, setInput } = useContext(ColorInputContext);
+  const [rule, setRule] = useState("Default");
+
   return (
     <div>
-      <IroColorPicker input={input} setInput={setInput} />
+      <IroColorPicker input={input} setInput={setInput} rule={rule} />
       <p>{input.primary}</p>
       <p>{input.secondary}</p>
       <p>{input.tertiary}</p>
+      <div onChange={(ev) => setRule(ev.target.value)}>
+        <input type="radio" value="Default" name="Rules" /> Default
+        <input type="radio" value="Complementary" name="Rules" /> Complementary
+      </div>
     </div>
   );
 };
