@@ -6,6 +6,15 @@
   "author": "Daniel Wang <d.wang20161@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "color": "^4.1.0",
+    "complementary-colors": "^1.0.6",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

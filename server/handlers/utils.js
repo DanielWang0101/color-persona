@@ -4,22 +4,32 @@ const str1 = "#142814"; //#291529
 // const myColor = new compColors(str1);
 // const color = Color(myColor.complementary()[1]).hex();
 // console.log("🚀 ~ color", color);
-const getComplementaryColor = (color) => {
-  const myColor = new compColors(color);
-  //Self
-  const rgbS = myColor.primary()[0];
-  const rgbSArray = Color(myColor.primary()[0]).array();
-  //Complementary
-  const hex = Color(myColor.complementary()[1]).hex();
-  const rgb = myColor.complementary()[0];
-  const rgbArray = Color(myColor.complementary()[1]).array();
-  const result = {
-    complementary: { hex, rgb, rgbArray },
-    self: { hex: color, rgbS, rgbSArray },
-  };
-  return result;
+const getComplementaryColor = (req, res) => {
+  try {
+    const { color } = req.params;
+    const myColor = new compColors(color);
+    //Self
+    const rgbS = myColor.primary()[0];
+    const rgbSArray = Color(myColor.primary()[0]).array();
+    //Complementary
+    const hex = Color(myColor.complementary()[1]).hex();
+    const rgb = myColor.complementary()[0];
+    const rgbArray = Color(myColor.complementary()[1]).array();
+    const result = {
+      complementary: { hex, rgb, rgbArray },
+      self: { hex: color, rgbS, rgbSArray },
+    };
+    return res.status(200).json({
+      status: 200,
+      data: result,
+    });
+  } catch (err) {
+    return res.status(404).json({
+      status: 404,
+      message: err.message,
+    });
+  }
 };
-console.log(getComplementaryColor(str1));
 // Todo 👇
 // const getTriadic = (color)=>{
 //     const myColor = new compColors(color);
