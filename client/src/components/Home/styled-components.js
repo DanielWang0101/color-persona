@@ -8,5 +8,6 @@ export const FlexRow = styled.div`
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-evenly;
+  justify-content: center;
+  margin: 0 50px;
 `;

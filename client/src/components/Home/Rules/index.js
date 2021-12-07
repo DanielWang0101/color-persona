@@ -1,5 +1,5 @@
 import React from "react";
-import { FlexColumn, FlexRow, Description } from "./styled-components";
+import { FlexColumn, FlexRow, Description, Center } from "./styled-components";
 const Rules = ({ setRule }) => {
   return (
     <FlexColumn onChange={(ev) => setRule(ev.target.value)}>

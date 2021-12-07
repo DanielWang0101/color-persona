@@ -27,8 +27,13 @@ export const Description = styled.p`
 
   color: grey;
 `;
+export const Center = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
 export const FlexColumn = styled.div`
-  /* width: 100%; */
+  width: 100%;
   display: flex;
   flex-flow: column nowrap;
   font-family: var(--font-body);

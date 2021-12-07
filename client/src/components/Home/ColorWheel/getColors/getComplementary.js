@@ -9,17 +9,35 @@ const str1 = "#142814"; //#291529
 // "type": "module",
 export const getComplementaryColor = (color) => {
   const myColor = new compColors(color);
+
   //Self
+  const hexS = Color(myColor.primary()[0]).hex();
   const rgbS = myColor.primary()[0];
   const rgbSArray = Color(myColor.primary()[0]).array();
+  //Self-Desaturated
+  const hexSD = Color(myColor.primary()[0]).desaturate(0.4).hex();
+  const rgbSD = Color(hexSD).object();
+  const rgbSDArray = Color(hexSD).rgb().array();
   //Complementary
-  const hex = Color(myColor.complementary()[1]).hex();
+  // const hex = Color(myColor.complementary()[1]).hex();
+  const hex = Color(hexS).rotate(180).hex();
+
   const rgb = myColor.complementary()[0];
   const rgbArray = Color(myColor.complementary()[1]).array();
+  //ComplementaryD
+  // const hexDark = Color(myColor.complementary()[0]).desaturate(0.4).hex();
+  const hexDark = Color(hex).desaturate(0.4).hex();
+
+  const rgbDark = Color(hexDark).object();
+  const rgbArrayDark = Color(hexDark).rgb().array();
+
   const result = {
     complementary: { hex, rgb, rgbArray },
     self: { hex: color, rgbS, rgbSArray },
+    complementaryDark: { hexDark, rgbDark, rgbArrayDark },
+    selfDesaturated: { hexSD, rgbSD, rgbSDArray },
   };
+
   return result;
 };
 // export default getComplementaryColor;
