@@ -9,6 +9,7 @@ export const NavBar = styled.div`
   align-items: center;
   padding: 0 20px;
   justify-content: space-between;
+  z-index: 2;
 `;
 export const Logo = styled.span`
   font-family: var(--font-heading);
@@ -77,4 +78,6 @@ export const DropDown = styled.div`
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   box-shadow: 0 2px 6px -1px rgb(0 0 0 / 10%);
+  z-index: 2;
+  position: fixed;
 `;

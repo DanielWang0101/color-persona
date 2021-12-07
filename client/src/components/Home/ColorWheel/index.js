@@ -4,7 +4,7 @@ import IroColorPicker from "./IroColorPicker";
 import { ColorInputContext } from "../../Context/ColorInputsContext";
 import Swatch from "./Swatch";
 import { Main } from "./styled-components";
-const ColorWheel = ({ rule }) => {
+const ColorWheel = ({ rule, setRule }) => {
   const {
     input,
     setInput,
@@ -32,6 +32,8 @@ const ColorWheel = ({ rule }) => {
         rule={rule}
         baseColor={baseColor}
         setBaseColor={setBaseColor}
+        colorA={colorA}
+        colorC={colorC}
         setColorA={setColorA}
         setColorB={setColorB}
         setColorC={setColorC}
@@ -40,6 +42,8 @@ const ColorWheel = ({ rule }) => {
       />
 
       <Swatch
+        rule={rule}
+        setRule={setRule}
         baseColor={baseColor}
         setBaseColor={setBaseColor}
         input={input}

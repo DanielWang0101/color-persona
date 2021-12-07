@@ -8,6 +8,10 @@ const str1 = "#142814"; //#291529
 // console.log("🚀 ~ color", color);
 // "type": "module",
 export const getComplementaryColor = (color) => {
+  let reg = /^#([0-9a-f]{3}){1,2}$/i;
+  if (!reg.test(color)) {
+    color = "#00c3ff";
+  }
   const myColor = new compColors(color);
 
   //Self
@@ -18,6 +22,10 @@ export const getComplementaryColor = (color) => {
   const hexSD = Color(myColor.primary()[0]).desaturate(0.4).hex();
   const rgbSD = Color(hexSD).object();
   const rgbSDArray = Color(hexSD).rgb().array();
+  //Self-whitened
+  const hexSW = Color(myColor.primary()[0]).lighten(0.2).hex();
+  const rgbSW = Color(hexSW).object();
+  const rgbSWArray = Color(hexSW).rgb().array();
   //Complementary
   // const hex = Color(myColor.complementary()[1]).hex();
   const hex = Color(hexS).rotate(180).hex();
@@ -36,6 +44,7 @@ export const getComplementaryColor = (color) => {
     self: { hex: color, rgbS, rgbSArray },
     complementaryDark: { hexDark, rgbDark, rgbArrayDark },
     selfDesaturated: { hexSD, rgbSD, rgbSDArray },
+    selfWhitened: { hexSW, rgbSW, rgbSWArray },
   };
 
   return result;

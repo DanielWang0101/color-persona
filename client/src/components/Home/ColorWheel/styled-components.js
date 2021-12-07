@@ -45,5 +45,6 @@ export const Input = styled.input`
   border-radius: 0px;
   &:focus {
     border-bottom: 2px solid #0084ff;
+    margin-bottom: -1px;
   }
 `;

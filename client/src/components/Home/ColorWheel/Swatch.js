@@ -1,9 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import iro from "@jaames/iro";
 import IroColorPicker from "./IroColorPicker";
 import { ColorInputContext } from "../../Context/ColorInputsContext";
 import { Cube, ColorList, Input, FlexColumn } from "./styled-components";
+
 const Swatch = ({
+  rule,
+  setRule,
   input,
   colorA,
   setColorA,
@@ -19,53 +22,48 @@ const Swatch = ({
   baseColor,
   setBaseColor,
 }) => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    ref.current.focus();
+  }, []);
   return (
     <FlexColumn>
-      {/* <ColorList>
-        {input.map((item, idx) => {
-          return (
-            <li>
-              <Cube style={{ backgroundColor: `${item}` }} />
-              <Input
-                type="text"
-                value={item}
-                onChange={(ev) => {
-                  const newInput = [...input];
-                  newInput[idx] = ev.target.value;
-                  setInput([newInput]);
-                }}
-              />
-            </li>
-          );
-        })}
-      </ColorList> */}
       {/* setcolorA changes the wheel, also selecting swatch switch basecolor and active color on the wheel */}
       <ColorList>
         <li>
-          <Cube style={{ backgroundColor: `${baseColor}` }} />
-          <Input
-            type="text"
-            value={baseColor}
-            onChange={(ev) => {
-              setBaseColor(ev.target.value);
-            }}
-          />
+          <Cube style={{ backgroundColor: `${colorA}` }} />
+          <Input type="text" value={colorA} defaultValue="#" />
         </li>
         <li>
           <Cube style={{ backgroundColor: `${colorB}` }} />
-          <Input type="text" value={colorB} />
+          <Input type="text" value={colorB} defaultValue="#" />
         </li>
+
         <li>
-          <Cube style={{ backgroundColor: `${colorC}` }} />
-          <Input type="text" value={colorC} />
+          <Cube style={{ backgroundColor: `${baseColor}` }} />
+          <Input
+            ref={ref}
+            type="text"
+            value={baseColor}
+            defaultValue="#"
+            onChange={(ev) => {
+              setBaseColor(ev.target.value);
+              const cpContainer = document.getElementById("picker");
+              const children = cpContainer.childNodes[0];
+              cpContainer.removeChild(children);
+              setColorC(ev.target.value);
+            }}
+          />
         </li>
+
         <li>
           <Cube style={{ backgroundColor: `${colorD}` }} />
-          <Input type="text" value={colorD} />
+          <Input type="text" value={colorD} defaultValue="#" />
         </li>
         <li>
           <Cube style={{ backgroundColor: `${colorE}` }} />
-          <Input type="text" value={colorE} />
+          <Input type="text" defaultValue="#" value={colorE} />
         </li>
       </ColorList>
     </FlexColumn>

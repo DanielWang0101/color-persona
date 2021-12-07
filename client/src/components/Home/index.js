@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <FlexRow>
       <Rules setRule={setRule} />
-      <ColorWheel rule={rule} />
+      <ColorWheel rule={rule} setRule={setRule} />
     </FlexRow>
   );
 };
