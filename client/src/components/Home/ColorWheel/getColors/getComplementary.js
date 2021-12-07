@@ -20,7 +20,6 @@ export const getComplementaryColor = (color) => {
     complementary: { hex, rgb, rgbArray },
     self: { hex: color, rgbS, rgbSArray },
   };
-  console.log(result);
   return result;
 };
 // export default getComplementaryColor;

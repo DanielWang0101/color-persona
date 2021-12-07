@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import ColorWheel from "./ColorWheel";
+import Rules from "./Rules";
+import { FlexRow } from "./styled-components";
 const HomePage = () => {
-  return <ColorWheel />;
+  const [rule, setRule] = useState("Default");
+  return (
+    <FlexRow>
+      <Rules setRule={setRule} />
+      <ColorWheel rule={rule} />
+    </FlexRow>
+  );
 };
 
 export default HomePage;

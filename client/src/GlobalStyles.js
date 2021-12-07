@@ -13,6 +13,7 @@ export default createGlobalStyle`
     --padding-page: 24px;
     --nav-height: 50px;
     --margin-top-main:70px;
+    --swatch-width:80px;
 
    
     
