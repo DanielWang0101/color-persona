@@ -13,7 +13,9 @@ export default createGlobalStyle`
     --padding-page: 24px;
     --nav-height: 50px;
     --margin-top-main:70px;
-    --swatch-width:80px;
+    --swatch-width:150px;
+    --mini-swatch-width:40px;
+
 
    
     
@@ -99,4 +101,11 @@ input {
     border-radius: 4px;
     padding: 0 12px;
   }
+
+  svg { 
+  cursor:crosshair; 
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+  -moz-filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+  -webkit-filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+}
 `;

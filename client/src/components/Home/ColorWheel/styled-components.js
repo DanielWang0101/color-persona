@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Cube = styled.div`
   height: var(--swatch-width);
   margin: 4px 0;
-  height: var(--swatch-width);
   margin-left: 10px;
 `;
 export const Main = styled.div`
@@ -20,11 +19,13 @@ export const ColorList = styled.div`
   display: flex;
   flex-flow: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   /* width: 100%; */
 `;
 export const FlexColumn = styled.div`
   width: 100%;
+  /* flex: 1 1 50%; */
+
   display: flex;
   flex-flow: column nowrap;
   font-family: var(--font-body);

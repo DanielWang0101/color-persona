@@ -8,7 +8,8 @@ const Rules = ({ setRule }) => {
         <input type="radio" value="Default" name="Rules" /> Default
       </FlexRow>
       <FlexRow>
-        <input type="radio" value="Complementary" name="Rules" /> Complementary
+        <input type="radio" value="Complementary" name="Rules" />
+        Complementary
       </FlexRow>
       <FlexRow>
         <input type="radio" value="Triad" name="Rules" /> Triad

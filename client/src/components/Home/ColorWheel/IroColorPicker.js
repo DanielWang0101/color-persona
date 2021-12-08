@@ -31,6 +31,8 @@ const IroColorPicker = ({
         width: 350,
         activeHandleRadius: 17,
         handleRadius: 15,
+        handleSvg: "#handle",
+        handleProps: { x: 0, y: -5 },
         colors: [
           defaultInitialColor.self.hex,
           defaultInitialColor.selfDesaturated.hexSD,
