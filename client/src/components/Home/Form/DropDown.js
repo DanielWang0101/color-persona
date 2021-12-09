@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-// import { FiChevronDown } from "react-icons/fi";
+import { FiChevronDown } from "react-icons/fi";
 const DropDown = ({}) => {
   const [toggle, setToggle] = useState(false);
   const [selected, setSelected] = useState("My Archive");
@@ -33,7 +33,7 @@ const DropDown = ({}) => {
           }}
         >
           {selected}
-          {/* <FiChevronDown /> */}
+          <FiChevronDown />
         </div>
         {toggle && (
           <div class="dropdown-content">

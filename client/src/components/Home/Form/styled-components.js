@@ -150,3 +150,48 @@ export const Button = styled.button`
   align-self: flex-start;
 `;
 // --color-button-blue
+// Toggleshare
+export const ButtonToggle = styled.button`
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+`;
+export const Container = styled.div`
+  border: 1px solid black;
+  display: block;
+  position: relative;
+  width: 64px;
+  height: 32px;
+`;
+
+export const StyledBackdrop = styled.div`
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 16px;
+  background: grey;
+  top: calc(50% - 8px);
+  opacity: 25%;
+  border-radius: 8px;
+  top: calc(50% - 8px);
+`;
+
+export const Ball = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: ${({ checked }) => (checked ? "red" : "grey")};
+  margin-top: 2px;
+  transition: all 0.25s ease-out;
+  ${ButtonToggle}:focus & {
+    box-shadow: 0px 0px 8px red;
+    outline: 2px solid white;
+  }
+`;
