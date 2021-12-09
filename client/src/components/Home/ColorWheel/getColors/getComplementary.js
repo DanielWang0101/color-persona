@@ -23,7 +23,7 @@ export const getComplementaryColor = (color) => {
   const rgbSD = Color(hexSD).object();
   const rgbSDArray = Color(hexSD).rgb().array();
   //Self-whitened
-  const hexSW = Color(myColor.primary()[0]).lighten(0.5).hex();
+  const hexSW = Color(myColor.primary()[0]).lighten(0.39).hex();
   const rgbSW = Color(hexSW).object();
   const rgbSWArray = Color(hexSW).rgb().array();
   //Complementary

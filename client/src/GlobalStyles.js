@@ -4,15 +4,21 @@ export default createGlobalStyle`
   :root {
     --color-divider:#d0d0d0;
     --color-loading:#d0d0d0;
+    --color-dropdown-font:#000403;
+
     --color-black-background: #000403;
     --color-dark-font: #1D4555;
-    --color-less-opaque-pink: rgba(226, 154, 167, .90);
+    --color-button-blue:  #0084ff;
     --font-heading: 'Poppins', sans-serif;
     --font-body: 'Poppins', sans-serif;
+    --font-size-body:1rem;
+    --font-size-option:0.7rem;
+
     --logo-font:'Petit Formal Script', cursive;
     --padding-page: 24px;
     --nav-height: 50px;
     --margin-top-main:70px;
+    --margin-top-input:8px;
     --swatch-width:150px;
     --mini-swatch-width:40px;
 

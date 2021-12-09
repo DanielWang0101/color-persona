@@ -1,5 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ColorInputContext } from "../../Context/ColorInputsContext";
+import CreateArchiveMenu from "./CreateArchiveMenu";
+import MiniSwatch from "./MiniSwatch";
+import DropDown from "./DropDown";
+
 import {
   FlexColumn,
   FlexRow,
@@ -7,24 +11,32 @@ import {
   Center,
   Cube,
   ColorList,
+  PlusButton,
 } from "./styled-components";
 const Form = ({ setRule }) => {
   const {
     baseColor,
     swatch: { colorA, colorB, colorD, colorE },
   } = useContext(ColorInputContext);
+  const [toggle, setToggle] = useState(false);
   return (
     <FlexColumn>
-      <ColorList>
-        <Cube style={{ backgroundColor: colorA }} />
-        <Cube style={{ backgroundColor: colorB }} />
-        <Cube style={{ backgroundColor: baseColor }} />
-        <Cube style={{ backgroundColor: colorD }} />
-        <Cube style={{ backgroundColor: colorE }} />
-      </ColorList>
+      <MiniSwatch
+        baseColor={baseColor}
+        colorA={colorA}
+        colorB={colorB}
+        colorD={colorD}
+        colorE={colorE}
+      />
       <Description>Apply Color Harmony Rule</Description>
       <FlexRow>
-        <input type="radio" value="Default" name="Rules" /> Default
+        Save to
+        <DropDown />
+        <PlusButton
+          onClick={() => {
+            setToggle(!toggle);
+          }}
+        />
       </FlexRow>
       <FlexRow>
         <input type="radio" value="Complementary" name="Rules" /> Complementary
@@ -32,6 +44,7 @@ const Form = ({ setRule }) => {
       <FlexRow>
         <input type="radio" value="Triad" name="Rules" /> Triad
       </FlexRow>
+      <CreateArchiveMenu setToggle={setToggle} toggle={toggle} />
     </FlexColumn>
   );
 };

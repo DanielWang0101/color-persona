@@ -9,7 +9,9 @@ const HomePage = () => {
     <FlexRow>
       <Rules setRule={setRule} />
       <ColorWheel rule={rule} setRule={setRule} />
-      <Form />
+      <div style={{ margin: "0 auto" }}>
+        <Form />
+      </div>
     </FlexRow>
   );
 };
