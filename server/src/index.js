@@ -6,7 +6,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
 // handlers
-const { getComplementaryColor } = require("./handlers/utils");
+const { getComplementaryColor } = require("../handlers/utils");
 // const { getItemById } = require("./handlers/getItemById.js");
 // const { updateItemStock } = require("./handlers/updateItemStock.js");
 // const { getCompanyById } = require("./handlers/getCompanyById.js");
@@ -31,6 +31,7 @@ express()
     next();
   })
   .use(morgan("tiny"))
+  .use(helmet())
   .use(express.static("./server/assets"))
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
