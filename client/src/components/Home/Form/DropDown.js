@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { FiChevronDown } from "react-icons/fi";
+import { FiChevronDown, FiCheck } from "react-icons/fi";
 const DropDown = ({}) => {
   const [toggle, setToggle] = useState(false);
   const [selected, setSelected] = useState("My Archive");
@@ -12,19 +12,6 @@ const DropDown = ({}) => {
   // }, []);
   return (
     <SelectBox>
-      {/* <Wrap
-        onChange={(ev) => {
-          setFlight(ev.target.value);
-        }}
-      >
-        <Item value="">My Archive</Item>
-        {flights && flights.length > 0
-          ? flights.map((flight) => {
-              return <Item eventKey={flight}>{flight}</Item>;
-            })
-          : null}
-      </Wrap> */}
-
       <div class="dropdown">
         <div
           class="dropdown-btn"

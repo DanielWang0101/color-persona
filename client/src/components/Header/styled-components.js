@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+
 export const NavBar = styled.div`
   background-color: var(--color-black-background);
   height: var(--nav-height);
@@ -8,7 +10,7 @@ export const NavBar = styled.div`
   display: flex;
   align-items: center;
   padding: 0 20px;
-  justify-content: space-between;
+  justify-content: flex-start;
   z-index: 2;
 `;
 export const Logo = styled.span`
@@ -32,8 +34,34 @@ export const Sign = styled.button`
   background-color: transparent;
   cursor: pointer;
   display: inline-block;
+  margin-left: auto;
 `;
-
+export const Links = styled(NavLink)`
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-link);
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 300;
+  text-decoration: none;
+  transition: all 0.1s;
+  &.active {
+    color: white;
+    font-weight: 600;
+  }
+  &:hover {
+    color: white;
+  }
+`;
+export const NavLinksContainer = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  /* width: 100%; */
+  justify-content: space-evenly;
+  align-items: center;
+  width: 30%;
+`;
 export const Avatar = styled.img`
   height: 35px;
   width: 35px;

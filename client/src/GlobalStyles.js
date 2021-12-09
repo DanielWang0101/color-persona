@@ -4,6 +4,8 @@ export default createGlobalStyle`
   :root {
     --color-divider:#d0d0d0;
     --color-loading:#d0d0d0;
+    --color-link:#d0d0d0;
+
     --color-dropdown-font:#000403;
 
     --color-black-background: #000403;

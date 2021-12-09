@@ -15,8 +15,8 @@ function App() {
         <Main>
           <Routes>
             <Route exact path="/" element={<HomePage />} />
-            <Route path="/explore" />
-            <Route path="/libraries" />
+            <Route exact path="/inspiration" />
+            <Route exact path="/archives" />
           </Routes>
         </Main>
       </BrowserRouter>
