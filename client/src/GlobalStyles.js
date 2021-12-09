@@ -13,7 +13,7 @@ export default createGlobalStyle`
     --color-button-blue:  #0084ff;
     --font-heading: 'Poppins', sans-serif;
     --font-body: 'Poppins', sans-serif;
-    --font-size-body:1rem;
+    --font-size-body:0.8rem;
     --font-size-option:0.7rem;
 
     --logo-font:'Petit Formal Script', cursive;
@@ -111,9 +111,9 @@ input {
   }
 
   svg { 
-  cursor:crosshair; 
+  #handle{cursor:crosshair; 
   filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
   -moz-filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
   -webkit-filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
-}
+}}
 `;

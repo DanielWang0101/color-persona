@@ -8,13 +8,19 @@
   "dependencies": {
     "color": "^4.1.0",
     "complementary-colors": "^1.0.6",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-jwt": "^6.1.0",
+    "helmet": "^4.6.0",
+    "jwks-rsa": "^2.0.5",
     "morgan": "^1.10.0"
   },
   "scripts": {
     "start": "nodemon index.js"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1"
   }
 }

@@ -8,10 +8,10 @@ const NavLinkGroup = () => {
       <Links exact={true} to="/" activeClassName="active">
         CREATE
       </Links>
-      <Links exact={true} to="/inspiration" activeClassName="active">
+      <Links exact={true} to="/archives" activeClassName="active">
         ARCHIVES
       </Links>
-      <Links exact={true} to="/archives" activeClassName="active">
+      <Links exact={true} to="/inspiration" activeClassName="active">
         INSPIRATION
       </Links>
     </NavLinksContainer>

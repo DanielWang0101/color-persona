@@ -3,23 +3,23 @@ import "./App.css";
 
 import Header from "./components/Header";
 import GlobalStyles from "./GlobalStyles";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import HomePage from "./components/Home";
+import Archive from "./components/Archive";
 import { Main } from "./components/Home/styled-components";
+import ProtectedRoute from "./auth/protected-route";
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <GlobalStyles />
-        <Header />
-        <Main>
-          <Routes>
-            <Route exact path="/" element={<HomePage />} />
-            <Route exact path="/inspiration" />
-            <Route exact path="/archives" />
-          </Routes>
-        </Main>
-      </BrowserRouter>
+      <GlobalStyles />
+      <Header />
+      <Main>
+        <Routes>
+          <Route exact path="/" element={<HomePage />} />
+          <Route exact path="/archives" element={<Archive />} />
+          <Route exact path="/inspiration" />
+        </Routes>
+      </Main>
     </>
   );
 }
