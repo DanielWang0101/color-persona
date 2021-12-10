@@ -118,7 +118,31 @@ export const SideWidget = styled.form`
     }
   }
 `;
-
+export const Notification = styled(SideWidget)`
+  top: 100px;
+  padding: 10px;
+  right: 320px;
+  width: auto;
+  justify-content: space-between;
+  flex-flow: row nowrap;
+  align-items: center;
+  -webkit-animation: pulse 0.05s ease;
+  -moz-animation: pulse 0.05s ease;
+  -o-animation: pulse 0.05s ease;
+  animation: pulse 0.05s ease;
+  svg {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-left: 10px;
+    color: ${({ success }) => {
+      if (success) {
+        return "green";
+      } else {
+        return "red";
+      }
+    }};
+  }
+`;
 export const Input = styled.input`
   display: inline-block;
   width: var(--swatch-width);

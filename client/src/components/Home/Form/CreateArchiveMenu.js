@@ -1,9 +1,13 @@
-import React, { useRef, useEffect, useContext } from "react";
+import React, { useRef, useEffect, useContext, useState } from "react";
 import { SideWidget, Input, Button } from "./styled-components";
+import Notifications from "./Notifications";
 import { FormContext } from "../../Context/FormContext";
-const Menu = ({ toggle, setToggle }) => {
+const Menu = ({ toggle, setToggle, setResponse }) => {
   const ref = useRef(null);
-  const { handleCreateArchive } = useContext(FormContext);
+  const { handleCreateArchive, newArchive, setNewArchive } =
+    useContext(FormContext);
+
+  // Make input active all the time interesting colors
   useEffect(() => {
     if (toggle) {
       ref.current.focus();
@@ -11,22 +15,30 @@ const Menu = ({ toggle, setToggle }) => {
   }, [toggle]);
   if (toggle) {
     return (
-      <SideWidget
-        onSubmit={(ev) => {
-          ev.preventDefault();
-          handleCreateArchive(ref.current.value);
-        }} //setNewArchive here to fetch in FormContext.js
-      >
-        New Archive
-        <Input ref={ref} required />
-        <Button
-          onClick={() => {
-            setToggle(!toggle);
-          }}
+      <>
+        <SideWidget
+          onSubmit={async (ev) => {
+            ev.preventDefault();
+            const res = await handleCreateArchive();
+            console.log(res);
+            if (res.success) {
+              setToggle(!toggle);
+            }
+            setResponse(res);
+          }} //setNewArchive here to fetch in FormContext.js
         >
-          Save
-        </Button>
-      </SideWidget>
+          New Archive
+          <Input
+            ref={ref}
+            value={newArchive}
+            onChange={(ev) => {
+              setNewArchive(ev.target.value);
+            }}
+            required
+          />
+          <Button>Save</Button>
+        </SideWidget>
+      </>
     );
   }
   return null;

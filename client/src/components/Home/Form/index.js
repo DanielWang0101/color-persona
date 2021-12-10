@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ColorInputContext } from "../../Context/ColorInputsContext";
 import CreateArchiveMenu from "./CreateArchiveMenu";
+import Notifications from "./Notifications";
 import MiniSwatch from "./MiniSwatch";
 import DropDown from "./DropDown";
 import ToggleShare from "./ToggleShare";
@@ -21,6 +22,9 @@ const Form = ({ setRule }) => {
   } = useContext(ColorInputContext);
   const [toggle, setToggle] = useState(false);
   const [checked, setChecked] = useState(false);
+  //state for notifications
+  const [response, setResponse] = useState(null);
+
   return (
     <FlexColumn>
       <MiniSwatch
@@ -46,7 +50,12 @@ const Form = ({ setRule }) => {
       <FlexRow>
         <input type="radio" value="Triad" name="Rules" /> Triad
       </FlexRow>
-      <CreateArchiveMenu setToggle={setToggle} toggle={toggle} />
+      <CreateArchiveMenu
+        setToggle={setToggle}
+        toggle={toggle}
+        setResponse={setResponse}
+      />
+      <Notifications response={response} setResponse={setResponse} />
       <ToggleShare checked={checked} setChecked={setChecked} />
     </FlexColumn>
   );

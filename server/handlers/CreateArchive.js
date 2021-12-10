@@ -74,7 +74,14 @@ const createNewArchive = async (req, res) => {
     // const newArchive = "color-persona";
     const { user, newArchive } = req.body;
     const client = new MongoClient(MONGO_URI, options);
-
+    if (newArchive === "") {
+      return res.status(400).json({
+        status: 400,
+        message: `Archive can't be empty string`,
+        new_user: undefined,
+        success: false,
+      });
+    }
     // connect to the client
     await client.connect();
 
@@ -95,8 +102,9 @@ const createNewArchive = async (req, res) => {
       await client.close();
       return res.status(200).json({
         status: 200,
-        message: "Archives Created",
+        message: `My Archive created, and ${newArchive} created`,
         new_user: true,
+        success: true,
       });
     } else {
       // if old user
@@ -113,12 +121,14 @@ const createNewArchive = async (req, res) => {
           status: 200,
           message: "Archive Created",
           new_user: false,
+          success: true,
         });
       } else {
         return res.status(200).json({
           status: 200,
           new_user: false,
           message: "archive already exists",
+          success: false,
         });
       }
       // create the new archive and get all the archive
@@ -127,6 +137,7 @@ const createNewArchive = async (req, res) => {
     return res.status(400).json({
       status: 400,
       message: err.message,
+      success: false,
     });
   }
 };

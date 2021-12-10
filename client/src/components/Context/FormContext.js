@@ -14,8 +14,7 @@ const FromProvider = ({ children }) => {
   // 1. Create a new Archive
   // States required
   const [newArchive, setNewArchive] = useState("");
-  const handleCreateArchive = async (value) => {
-    setNewArchive(value);
+  const handleCreateArchive = async () => {
     if (!isLoading && isAuthenticated) {
       const response = await fetch("/api/archive/create", {
         method: "POST",
@@ -28,7 +27,7 @@ const FromProvider = ({ children }) => {
           newArchive,
         }),
       }).then((res) => res.json());
-      console.log(response.message);
+      return response;
     }
   };
   // 2. Update an Archive (require attention)
@@ -46,7 +45,9 @@ const FromProvider = ({ children }) => {
   //   }, [isAuthenticated, currentUserUpdate]);
   // export all set function
   return (
-    <FormContext.Provider value={{ handleCreateArchive }}>
+    <FormContext.Provider
+      value={{ handleCreateArchive, newArchive, setNewArchive }}
+    >
       {children}
     </FormContext.Provider>
   );
