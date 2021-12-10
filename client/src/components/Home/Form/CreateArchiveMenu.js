@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { SideWidget, Input, Button } from "./styled-components";
+import { FormContext } from "../../Context/FormContext";
 const Menu = ({ toggle, setToggle }) => {
   const ref = useRef(null);
-
+  const { handleCreateArchive } = useContext(FormContext);
   useEffect(() => {
     if (toggle) {
       ref.current.focus();
@@ -10,9 +11,14 @@ const Menu = ({ toggle, setToggle }) => {
   }, [toggle]);
   if (toggle) {
     return (
-      <SideWidget>
+      <SideWidget
+        onSubmit={(ev) => {
+          ev.preventDefault();
+          handleCreateArchive(ref.current.value);
+        }} //setNewArchive here to fetch in FormContext.js
+      >
         New Archive
-        <Input ref={ref} />
+        <Input ref={ref} required />
         <Button
           onClick={() => {
             setToggle(!toggle);

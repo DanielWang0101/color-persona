@@ -84,7 +84,7 @@ export const PlusButton = styled.button`
   }
 `;
 // Side Widget
-export const SideWidget = styled.div`
+export const SideWidget = styled.form`
   display: flex;
   flex-flow: column;
   padding: 20px;
