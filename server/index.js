@@ -6,7 +6,8 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
 // handlers
-const { getComplementaryColor } = require("../handlers/utils");
+const { getArchive } = require("./handlers/CreateArchive");
+const { getComplementaryColor } = require("./handlers/utils");
 // const { getItemById } = require("./handlers/getItemById.js");
 // const { updateItemStock } = require("./handlers/updateItemStock.js");
 // const { getCompanyById } = require("./handlers/getCompanyById.js");
@@ -44,6 +45,8 @@ express()
     getComplementaryColor(req, res);
     console.log("trigger");
   })
+
+  .get("/api/archives/:user", getArchive)
   // get single item by id
   //   .get("/foabt/items/:_id", getItemById)
   //   // update item stock takes body {_id, numPurchased}

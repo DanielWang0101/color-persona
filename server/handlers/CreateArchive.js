@@ -4,9 +4,12 @@
 const { MongoClient } = require("mongodb");
 
 //get URI
-require("dotenv").config({ path: "../.env" });
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+//{ path: "./server/.env" }
 const { MONGO_URI } = process.env;
-console.log("🚀 ~ MONGO_URI", MONGO_URI);
 
 const options = {
   useNewUrlParser: true,
@@ -15,68 +18,56 @@ const options = {
 
 // get all items from the database
 // pagenated requires offset and quantity in the request body
-const test = async () => {
-  console.log("🚀 ~ MONGO_URI", MONGO_URI);
-  const client = new MongoClient(MONGO_URI, options);
 
-  // connect to the client
-  await client.connect();
-
-  // connect to the database
-  const db = client.db("color-persona");
-  console.log("CONNECTED");
-  //   await db.createCollection("another-user");
-  //   const result = await db.listCollections().toArray();
-  const result = await db.collection("user").find().toArray();
-  console.log(result);
-  await client.close();
-  console.log("close");
-};
-const getAllItems = async (req, res) => {
+const getArchive = async (req, res) => {
   try {
-    // get the offset and quantity for pagination from the request body
-    // conditional to account for no body - start from beginning and give 6 items
-    const offset = req.params.offset ? req.params.offset : 0;
-    const quantity = 6;
-
-    // create a new client
+    // const user = "auth0|61b26232f64d4a0072acb539";
+    const { user } = req.params;
     const client = new MongoClient(MONGO_URI, options);
 
     // connect to the client
     await client.connect();
 
     // connect to the database
-    const db = client.db("Ecommerce");
+    const db = client.db("color-persona");
     console.log("CONNECTED");
+    // check if the client already exists in the db
 
-    // retreive all items
-    const allItems = await db
-      .collection("items")
-      .find()
-      .skip(parseInt(offset))
-      .limit(quantity)
-      .toArray();
-
-    //close the collection
-    client.close();
-    console.log("DISCONNECTED");
-
-    // return the json object and status
-    return (
-      // SUCCESS return
-      res.status(200).json({
+    const allUsersInfo = await db.listCollections().toArray();
+    const users = allUsersInfo.map((i) => i.name);
+    let ifUserExists = users.includes(user);
+    if (!ifUserExists) {
+      //if new user, create his archive collection
+      await db.createCollection(user);
+      await db.collection(user).insertOne({ _id: "My Archive" });
+      const userArchives = await db.collection(user).find().toArray();
+      await client.close();
+      return res.status(200).json({
         status: 200,
-        data: allItems,
-      })
-    );
+        // data: currentStock,
+        data: userArchives,
+        new_user: true,
+      });
+    } else {
+      //if old user, get his archive directly
+
+      const userArchives = await db.collection(user).find().toArray();
+      await client.close();
+      return res.status(200).json({
+        status: 200,
+        // data: currentStock,
+        data: userArchives,
+        new_user: false,
+      });
+    }
   } catch (err) {
-    // ERROR return
-    res.status(400).json({
+    return res.status(400).json({
       status: 400,
+      // data: currentStock,
       message: err.message,
     });
   }
 };
 
 // export handler function
-module.exports = { getAllItems };
+module.exports = { getArchive };

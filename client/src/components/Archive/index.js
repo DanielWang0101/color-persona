@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   SelectBox,
   DropDownList,
@@ -8,26 +8,36 @@ import {
 import { FiChevronDown, FiCheck } from "react-icons/fi";
 import Accordion from "./Accordion";
 import Profile from "../Header/Profile";
+import { CurrentUserContext } from "../Context/CurrentUserContext";
+import { useAuth0 } from "@auth0/auth0-react";
 const Archive = () => {
-  const [toggle, setToggle] = useState(false);
-  const [selected, setSelected] = useState("My Archive");
-  const options = ["My Archive", "Color-Persona"];
-  // useEffect(() => {
-  //   fetch("/api/flights")
-  //     .then((res) => res.json())
-  //     .then((result) => setFlights(result.data));
-  // }, []);
+  const { isAuthenticated, user } = useAuth0();
+
+  const { archives, setArchives } = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setArchives([
+        {
+          _id: "My Archive",
+        },
+      ]);
+    }
+    fetch(`/api/archives/${user.sub}`)
+      .then((res) => res.json())
+      .then((result) => setArchives(result.data));
+  }, [isAuthenticated]);
   return (
     <>
-      {options.map((option) => {
+      {archives.map((archive) => {
         return (
           <Accordion
-            title={option}
+            title={archive._id}
             content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
           >
-            {options.map((text) => {
+            {/* {options.map((text) => {
               return text;
-            })}
+            })} */}
           </Accordion>
         );
       })}
