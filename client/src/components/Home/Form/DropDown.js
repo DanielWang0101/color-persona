@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { FiChevronDown, FiCheck } from "react-icons/fi";
+import { CurrentUserContext } from "../../Context/CurrentUserContext";
+import { FormContext } from "../../Context/FormContext";
 const DropDown = ({}) => {
   const [toggle, setToggle] = useState(false);
-  const [selected, setSelected] = useState("My Archive");
-  const option = ["My Archive", "Color-Persona"];
+  const { archives, setArchives } = useContext(CurrentUserContext);
+  const { selectedArchive, setSelectedArchive } = useContext(FormContext);
   // useEffect(() => {
   //   fetch("/api/flights")
   //     .then((res) => res.json())
@@ -19,21 +21,21 @@ const DropDown = ({}) => {
             setToggle(!toggle);
           }}
         >
-          {selected}
+          {selectedArchive}
           <FiChevronDown />
         </div>
         {toggle && (
           <div class="dropdown-content">
-            {option.map((item) => {
+            {archives.map((archive) => {
               return (
                 <div
                   class="dropdown-item"
                   onClick={(ev) => {
-                    setSelected(item);
+                    setSelectedArchive(archive._id);
                     setToggle(!toggle);
                   }}
                 >
-                  {item}
+                  {archive._id}
                 </div>
               );
             })}
@@ -61,6 +63,9 @@ const SelectBox = styled.div`
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
+      /* text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap; */
     }
     .dropdown-content {
       display: flex;

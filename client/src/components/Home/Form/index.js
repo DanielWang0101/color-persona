@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import { ColorInputContext } from "../../Context/ColorInputsContext";
+import { FormContext } from "../../Context/FormContext";
 import CreateArchiveMenu from "./CreateArchiveMenu";
 import Notifications from "./Notifications";
 import MiniSwatch from "./MiniSwatch";
 import DropDown from "./DropDown";
 import ToggleShare from "./ToggleShare";
 import {
+  Input,
   FlexColumn,
   FlexRow,
   Description,
@@ -13,6 +15,7 @@ import {
   Cube,
   ColorList,
   PlusButton,
+  Button,
 } from "./styled-components";
 
 const Form = ({ setRule }) => {
@@ -20,6 +23,7 @@ const Form = ({ setRule }) => {
     baseColor,
     swatch: { colorA, colorB, colorD, colorE },
   } = useContext(ColorInputContext);
+  const { paletteName, setPaletteName } = useContext(FormContext);
   const [toggle, setToggle] = useState(false);
   const [checked, setChecked] = useState(false);
   //state for notifications
@@ -34,7 +38,7 @@ const Form = ({ setRule }) => {
         colorD={colorD}
         colorE={colorE}
       />
-      <Description>Apply Color Harmony Rule</Description>
+      <Description>Save This Color Palette</Description>
       <FlexRow>
         Save to
         <DropDown />
@@ -45,10 +49,17 @@ const Form = ({ setRule }) => {
         />
       </FlexRow>
       <FlexRow>
-        <input type="radio" value="Complementary" name="Rules" /> Complementary
+        <span style={{ marginRight: "10px" }}> Name</span>
+
+        <Input
+          style={{ width: "100%", margin: "0 0 0 0" }}
+          value={paletteName}
+          onChange={setPaletteName}
+        />
       </FlexRow>
       <FlexRow>
-        <input type="radio" value="Triad" name="Rules" /> Triad
+        <ToggleShare checked={checked} setChecked={setChecked} /> Publish to
+        Inspiration
       </FlexRow>
       <CreateArchiveMenu
         setToggle={setToggle}
@@ -56,7 +67,7 @@ const Form = ({ setRule }) => {
         setResponse={setResponse}
       />
       <Notifications response={response} setResponse={setResponse} />
-      <ToggleShare checked={checked} setChecked={setChecked} />
+      <Button style={{ marginLeft: "auto" }}>Save</Button>
     </FlexColumn>
   );
 };

@@ -31,6 +31,9 @@ const FromProvider = ({ children }) => {
     }
   };
   // 2. Update an Archive (require attention)
+  const [selectedArchive, setSelectedArchive] = useState("select an option");
+  const [scheme, setScheme] = useState([]);
+  const [paletteName, setPaletteName] = useState("My Color Theme");
   //   useEffect(() => {
   //     if (!isAuthenticated) {
   //       setArchives([
@@ -46,7 +49,15 @@ const FromProvider = ({ children }) => {
   // export all set function
   return (
     <FormContext.Provider
-      value={{ handleCreateArchive, newArchive, setNewArchive }}
+      value={{
+        handleCreateArchive,
+        newArchive,
+        setNewArchive,
+        selectedArchive,
+        setSelectedArchive,
+        paletteName,
+        setPaletteName,
+      }}
     >
       {children}
     </FormContext.Provider>

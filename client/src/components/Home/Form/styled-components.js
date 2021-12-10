@@ -34,7 +34,7 @@ export const FlexColumn = styled.div`
   flex-flow: column nowrap;
   font-family: var(--font-body);
   justify-content: space-evenly;
-  height: 200px;
+  height: 300px;
   font-size: 0.9rem;
 `;
 export const Cube = styled.div`
