@@ -1,9 +1,14 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { ColorInputContext } from "./ColorInputsContext";
 export const FormContext = createContext();
 // states wont be exported, only the set functions
 //states are used to do fetch.
 const FromProvider = ({ children }) => {
+  const {
+    baseColor,
+    swatch: { colorA, colorB, colorD, colorE },
+  } = useContext(ColorInputContext);
   const { isAuthenticated, user, isLoading } = useAuth0();
   // set form values prepare for submit
 
@@ -34,6 +39,25 @@ const FromProvider = ({ children }) => {
   const [selectedArchive, setSelectedArchive] = useState("select an option");
   const [scheme, setScheme] = useState([]);
   const [paletteName, setPaletteName] = useState("My Color Theme");
+
+  const handleSavePalette = async () => {
+    if (!isLoading && isAuthenticated) {
+      const response = await fetch("/api/palette/save", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          colors: [colorA, colorB, baseColor, colorD, colorE],
+          user: user.sub,
+          archiveName: selectedArchive,
+          paletteName,
+        }),
+      }).then((res) => res.json());
+      return response;
+    }
+  };
   //   useEffect(() => {
   //     if (!isAuthenticated) {
   //       setArchives([
@@ -57,6 +81,7 @@ const FromProvider = ({ children }) => {
         setSelectedArchive,
         paletteName,
         setPaletteName,
+        handleSavePalette,
       }}
     >
       {children}

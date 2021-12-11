@@ -27,7 +27,7 @@ export const Center = styled.div`
   display: flex;
   justify-content: center;
 `;
-export const FlexColumn = styled.div`
+export const FlexColumn = styled.form`
   /* width: 100%; */
   flex: 1 1 30%;
   display: flex;
@@ -185,7 +185,7 @@ export const ButtonToggle = styled.button`
   cursor: pointer;
 `;
 export const Container = styled.div`
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: block;
   position: relative;
   width: 64px;

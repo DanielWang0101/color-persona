@@ -39,7 +39,7 @@ const getArchive = async (req, res) => {
     if (!ifUserExists) {
       //if new user, create his archive collection
       await db.createCollection(user);
-      await db.collection(user).insertOne({ _id: "My Archive" });
+      await db.collection(user).insertOne({ _id: "My Archive", palettes: [] });
       const userArchives = await db.collection(user).find().toArray();
       await client.close();
       return res.status(200).json({
@@ -96,8 +96,8 @@ const createNewArchive = async (req, res) => {
     if (!ifUserExists) {
       //if new user, create his archive collection
       await db.createCollection(user);
-      await db.collection(user).insertOne({ _id: "My Archive" });
-      await db.collection(user).insertOne({ _id: newArchive });
+      await db.collection(user).insertOne({ _id: "My Archive", palettes: [] });
+      await db.collection(user).insertOne({ _id: newArchive, palettes: [] });
 
       await client.close();
       return res.status(200).json({
@@ -114,7 +114,7 @@ const createNewArchive = async (req, res) => {
         (archive) => archive._id === newArchive
       );
       if (!ifArchiveExists) {
-        await db.collection(user).insertOne({ _id: newArchive });
+        await db.collection(user).insertOne({ _id: newArchive, palettes: [] });
 
         await client.close();
         return res.status(200).json({
@@ -124,6 +124,8 @@ const createNewArchive = async (req, res) => {
           success: true,
         });
       } else {
+        await client.close();
+
         return res.status(200).json({
           status: 200,
           new_user: false,
@@ -134,6 +136,8 @@ const createNewArchive = async (req, res) => {
       // create the new archive and get all the archive
     }
   } catch (err) {
+    await client.close();
+
     return res.status(400).json({
       status: 400,
       message: err.message,

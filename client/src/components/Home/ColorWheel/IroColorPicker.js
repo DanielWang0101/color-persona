@@ -18,7 +18,6 @@ const IroColorPicker = ({
   setColorE,
 }) => {
   const colorPickerArray = [];
-
   useEffect(() => {
     if (rule === "Default") {
       createDefaultWheel();

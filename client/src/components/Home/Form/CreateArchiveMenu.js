@@ -1,12 +1,14 @@
 import React, { useRef, useEffect, useContext, useState } from "react";
 import { SideWidget, Input, Button } from "./styled-components";
 import Notifications from "./Notifications";
+import { CurrentUserContext } from "../../Context/CurrentUserContext";
 import { FormContext } from "../../Context/FormContext";
 const Menu = ({ toggle, setToggle, setResponse }) => {
   const ref = useRef(null);
   const { handleCreateArchive, newArchive, setNewArchive } =
     useContext(FormContext);
-
+  const { currentUserUpdate, setCurrentUserUpdate } =
+    useContext(CurrentUserContext);
   // Make input active all the time interesting colors
   useEffect(() => {
     if (toggle) {
@@ -25,6 +27,7 @@ const Menu = ({ toggle, setToggle, setResponse }) => {
               setToggle(!toggle);
             }
             setResponse(res);
+            setCurrentUserUpdate(!currentUserUpdate);
           }} //setNewArchive here to fetch in FormContext.js
         >
           New Archive

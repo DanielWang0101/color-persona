@@ -18,11 +18,11 @@ ReactDOM.render(
     > */}
     <Auth0ProviderWithHistory>
       <CurrentUserProvider>
-        <FormProvider>
-          <ColorInputProvider>
+        <ColorInputProvider>
+          <FormProvider>
             <App />
-          </ColorInputProvider>
-        </FormProvider>
+          </FormProvider>
+        </ColorInputProvider>
       </CurrentUserProvider>
     </Auth0ProviderWithHistory>
     {/* </Auth0Provider> */}

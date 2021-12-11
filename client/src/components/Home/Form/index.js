@@ -6,6 +6,7 @@ import Notifications from "./Notifications";
 import MiniSwatch from "./MiniSwatch";
 import DropDown from "./DropDown";
 import ToggleShare from "./ToggleShare";
+import { CurrentUserContext } from "../../Context/CurrentUserContext";
 import {
   Input,
   FlexColumn,
@@ -23,14 +24,23 @@ const Form = ({ setRule }) => {
     baseColor,
     swatch: { colorA, colorB, colorD, colorE },
   } = useContext(ColorInputContext);
-  const { paletteName, setPaletteName } = useContext(FormContext);
+  const { paletteName, setPaletteName, handleSavePalette } =
+    useContext(FormContext);
+  const { currentUserUpdate, setCurrentUserUpdate } =
+    useContext(CurrentUserContext);
   const [toggle, setToggle] = useState(false);
   const [checked, setChecked] = useState(false);
   //state for notifications
   const [response, setResponse] = useState(null);
 
   return (
-    <FlexColumn>
+    <FlexColumn
+      onSubmit={async (ev) => {
+        ev.preventDefault();
+        const res = await handleSavePalette();
+        setResponse(res);
+      }}
+    >
       <MiniSwatch
         baseColor={baseColor}
         colorA={colorA}
@@ -67,7 +77,14 @@ const Form = ({ setRule }) => {
         setResponse={setResponse}
       />
       <Notifications response={response} setResponse={setResponse} />
-      <Button style={{ marginLeft: "auto" }}>Save</Button>
+      <Button
+        style={{ marginLeft: "auto" }}
+        onClick={() => {
+          setCurrentUserUpdate(!currentUserUpdate);
+        }}
+      >
+        Save
+      </Button>
     </FlexColumn>
   );
 };
