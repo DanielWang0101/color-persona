@@ -7,7 +7,7 @@ export default createGlobalStyle`
     --color-link:#d0d0d0;
 
     --color-dropdown-font:#000403;
-
+    --card-border-color:hsla(0,6%,90%,0.65);
     --color-black-background: #000403;
     --color-dark-font: #1D4555;
     --color-button-blue:  #0084ff;

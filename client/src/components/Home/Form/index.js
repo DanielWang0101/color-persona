@@ -39,6 +39,7 @@ const Form = ({ setRule }) => {
         ev.preventDefault();
         const res = await handleSavePalette();
         setResponse(res);
+        setCurrentUserUpdate(!currentUserUpdate);
       }}
     >
       <MiniSwatch
@@ -53,7 +54,8 @@ const Form = ({ setRule }) => {
         Save to
         <DropDown />
         <PlusButton
-          onClick={() => {
+          onClick={(ev) => {
+            ev.preventDefault();
             setToggle(!toggle);
           }}
         />
@@ -64,7 +66,9 @@ const Form = ({ setRule }) => {
         <Input
           style={{ width: "100%", margin: "0 0 0 0" }}
           value={paletteName}
-          onChange={setPaletteName}
+          onChange={(ev) => {
+            setPaletteName(ev.target.value);
+          }}
         />
       </FlexRow>
       <FlexRow>
@@ -77,14 +81,7 @@ const Form = ({ setRule }) => {
         setResponse={setResponse}
       />
       <Notifications response={response} setResponse={setResponse} />
-      <Button
-        style={{ marginLeft: "auto" }}
-        onClick={() => {
-          setCurrentUserUpdate(!currentUserUpdate);
-        }}
-      >
-        Save
-      </Button>
+      <Button style={{ marginLeft: "auto" }}>Save</Button>
     </FlexColumn>
   );
 };

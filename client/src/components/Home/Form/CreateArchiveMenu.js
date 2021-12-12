@@ -19,27 +19,32 @@ const Menu = ({ toggle, setToggle, setResponse }) => {
     return (
       <>
         <SideWidget
-          onSubmit={async (ev) => {
-            ev.preventDefault();
-            const res = await handleCreateArchive();
-            console.log(res);
-            if (res.success) {
-              setToggle(!toggle);
-            }
-            setResponse(res);
-            setCurrentUserUpdate(!currentUserUpdate);
-          }} //setNewArchive here to fetch in FormContext.js
+        //setNewArchive here to fetch in FormContext.js
         >
           New Archive
           <Input
             ref={ref}
             value={newArchive}
             onChange={(ev) => {
+              ev.preventDefault();
               setNewArchive(ev.target.value);
             }}
             required
           />
-          <Button>Save</Button>
+          <Button
+            onClick={async (ev) => {
+              ev.preventDefault();
+              const res = await handleCreateArchive();
+              console.log(res);
+              if (res.success) {
+                setToggle(!toggle);
+              }
+              setResponse(res);
+              setCurrentUserUpdate(!currentUserUpdate);
+            }}
+          >
+            Save
+          </Button>
         </SideWidget>
       </>
     );

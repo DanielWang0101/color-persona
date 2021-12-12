@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-
+import MiniSwatch from "./MiniSwatch";
 import { FiChevronDown, FiCheck } from "react-icons/fi";
 import Accordion from "./Accordion";
 import Profile from "../Header/Profile";
@@ -16,9 +16,10 @@ const Archive = () => {
             title={archive._id}
             content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
           >
-            {/* {options.map((text) => {
-              return text;
-            })} */}
+            {archive.palettes &&
+              archive.palettes.map((palette) => {
+                return <MiniSwatch palette={palette} />;
+              })}
           </Accordion>
         );
       })}

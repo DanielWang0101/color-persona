@@ -30,7 +30,7 @@ const DropDown = ({}) => {
               return (
                 <div
                   class="dropdown-item"
-                  onClick={(ev) => {
+                  onClick={() => {
                     setSelectedArchive(archive._id);
                     setToggle(!toggle);
                   }}
