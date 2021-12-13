@@ -15,7 +15,7 @@ const Inspiration = () => {
           return (
             <div>
               <img src={art.thumb} />
-              {art.colors && <MiniSwatch palette={art.colors} />}
+              {art.colors && <MiniSwatch palette={art} />}
             </div>
           );
         })}

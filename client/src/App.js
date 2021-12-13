@@ -8,6 +8,7 @@ import HomePage from "./components/Home";
 import Archive from "./components/Archive";
 import { Main } from "./components/Home/styled-components";
 import ProtectedRoute from "./auth/protected-route";
+import Inspiration from "./components/Inspiration";
 function App() {
   return (
     <>
@@ -17,7 +18,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/archives" element={<Archive />} />
-          <Route exact path="/inspiration" />
+          <Route exact path="/inspiration" element={<Inspiration />} />
         </Routes>
       </Main>
     </>
