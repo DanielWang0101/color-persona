@@ -47,12 +47,12 @@ const unsplash = createApi({
 //   }
 // RESULT from unsplash
 
-export const getImages = async (req, res) => {
+export const getImagesPalette = async (req, res) => {
   try {
     const resp = await unsplash.search.getPhotos({
       query: "graphic art",
       page: 1,
-      perPage: 5,
+      perPage: 3,
       // color: 'green',
       // orientation: 'portrait',
     });
@@ -71,36 +71,37 @@ export const getImages = async (req, res) => {
     let contentEnriched = [];
 
     for (let i = 0; i < images.length; i++) {
-      let output = { colors: [], thumb: "", regular: "" };
-      let imageUrl = images[i];
-      let thumbnails = imagesThumbs[i];
-      let url =
-        "https://api.imagga.com/v2/colors?image_url=" +
-        encodeURIComponent(thumbnails);
-      let response = await got(url, {
-        username: apiKey,
-        password: apiSecret,
-      });
+      //   let output = { colors: [], thumb: "", regular: "" };
+      //   let imageUrl = images[i];
+      //   let thumbnails = imagesThumbs[i];
+      //   let url =
+      //     "https://api.imagga.com/v2/colors?image_url=" +
+      //     encodeURIComponent(thumbnails);
+      //   let response = await got(url, {
+      //     username: apiKey,
+      //     password: apiSecret,
+      //   });
 
-      let resu = JSON.parse(response.body).result.colors;
+      //   let resu = JSON.parse(response.body).result.colors;
 
-      let bg = resu.background_colors;
-      //   let fo = res.foreground_colors;
-      let randomNum = Math.floor(Math.random() * 3);
-      let bgColor = bg[randomNum].closest_palette_color_html_code;
-      //   let foColor = fo[randomNum].closest_palette_color_html_code;
-      // output.colors.push(bgColor, foColor);
-      let img = resu.image_colors;
-      img.forEach((color) => {
-        output.colors.push(color.closest_palette_color_html_code);
-      });
-      if (output.colors.length < 5) {
-        output.colors.push(bgColor);
-      }
+      //   let bg = resu.background_colors;
+      //   //   let fo = res.foreground_colors;
+      //   let randomNum = Math.floor(Math.random() * 3);
+      //   let bgColor = bg[randomNum].closest_palette_color_html_code;
+      //   //   let foColor = fo[randomNum].closest_palette_color_html_code;
+      //   // output.colors.push(bgColor, foColor);
+      //   let img = resu.image_colors;
+      //   img.forEach((color) => {
+      //     output.colors.push(color.closest_palette_color_html_code);
+      //   });
+      //   if (output.colors.length < 5) {
+      //     output.colors.push(bgColor);
+      //   }
       output = { ...output, ["thumb"]: thumbnails, ["regular"]: imageUrl };
       contentEnriched.push(output);
     }
     // return contentEnriched;
+    // return null;
     return res.status(200).json({
       status: 200,
       success: true,

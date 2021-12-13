@@ -8,6 +8,6 @@ export const FlexColumn = styled.div`
 
   font-family: var(--font-body);
   justify-content: flex-start;
-  height: 3565.84px;
+  height: 1500px;
   font-size: 0.9rem;
 `;

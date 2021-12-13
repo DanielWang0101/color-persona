@@ -8,7 +8,7 @@ import cors from "cors";
 // handlers
 import { getArchive, createNewArchive } from "./handlers/CreateArchive.mjs";
 import { savePalette } from "./handlers/SavePalette.mjs";
-import { getImages } from "./unsplash/data.mjs";
+import { getImagesPalette } from "./unsplash/data.mjs";
 // const { getItemById } = require("./handlers/getItemById.js");
 // const { updateItemStock } = require("./handlers/updateItemStock.js");
 // const { getCompanyById } = require("./handlers/getCompanyById.js");
@@ -18,7 +18,7 @@ import { getImages } from "./unsplash/data.mjs";
 // const { getAllCompanies } = require("./handlers/getAllCompanies");
 
 //port
-const PORT = 8000;
+const PORT = 8080;
 
 express()
   .use(function (req, res, next) {
@@ -50,7 +50,7 @@ express()
   .get("/api/archives/:user", getArchive)
   .post("/api/archive/create", createNewArchive)
   .put("/api/palette/save", savePalette)
-  .get("/api/inspiration", getImages)
+  .get("/api/inspiration", getImagesPalette)
   // get single item by id
   //   .get("/foabt/items/:_id", getItemById)
   //   // update item stock takes body {_id, numPurchased}
