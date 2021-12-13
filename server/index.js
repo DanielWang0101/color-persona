@@ -8,6 +8,7 @@ const cors = require("cors");
 // handlers
 const { getArchive, createNewArchive } = require("./handlers/CreateArchive");
 const { savePalette } = require("./handlers/SavePalette");
+
 // const { getItemById } = require("./handlers/getItemById.js");
 // const { updateItemStock } = require("./handlers/updateItemStock.js");
 // const { getCompanyById } = require("./handlers/getCompanyById.js");

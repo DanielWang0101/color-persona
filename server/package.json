@@ -6,6 +6,7 @@
   "author": "Daniel Wang <d.wang20161@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.24.0",
     "color": "^4.1.0",
     "complementary-colors": "^1.0.6",
     "cors": "^2.8.5",

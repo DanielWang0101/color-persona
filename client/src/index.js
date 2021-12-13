@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history";
 import CurrentUserProvider from "./components/Context/CurrentUserContext";
 import FormProvider from "./components/Context/FormContext";
+import InspirationProvider from "./components/Context/InspirationContext";
 // const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 // const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 ReactDOM.render(
@@ -20,7 +21,9 @@ ReactDOM.render(
       <CurrentUserProvider>
         <ColorInputProvider>
           <FormProvider>
-            <App />
+            <InspirationProvider>
+              <App />
+            </InspirationProvider>
           </FormProvider>
         </ColorInputProvider>
       </CurrentUserProvider>
