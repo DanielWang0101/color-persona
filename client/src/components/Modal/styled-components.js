@@ -1,6 +1,11 @@
 import styled from "styled-components";
-
+import { Image } from "cloudinary-react";
 import { MdClose } from "react-icons/md";
+
+export const RowFlex = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+`;
 export const Background = styled.div`
   width: 100%;
   height: 100%;
@@ -15,11 +20,11 @@ export const Background = styled.div`
   font-family: var(--font-body);
   z-index: 4;
 `;
-export const ModalImg = styled.img`
+export const ModalImg = styled(Image)`
   /* width: 100%; */
   height: auto;
   /* border-radius: 10px 0 0 10px; */
-  /* background: #000; */
+  background: #fff;
 `;
 export const ModalWrapper = styled.div`
   width: 800px;

@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { useSpring, animated } from "react-spring";
 import {
+  RowFlex,
   Background,
   ModalWrapper,
   ModalImg,
@@ -24,7 +25,8 @@ import { determinDarkLight } from "../Home/ColorWheel/getColors/determineDarkorL
 const Modal = ({ showModal, setShowModal, palette }) => {
   const modalRef = useRef();
   const [response, setResponse] = useState(null);
-
+  const [imageID, setImageID] = useState("");
+  const [previewSource, setPreviewSource] = useState("");
   const animation = useSpring({
     config: {
       duration: 250,
@@ -36,6 +38,7 @@ const Modal = ({ showModal, setShowModal, palette }) => {
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
+      setPreviewSource(null);
     }
   };
 
@@ -60,42 +63,58 @@ const Modal = ({ showModal, setShowModal, palette }) => {
         <Background onClick={closeModal} ref={modalRef}>
           <CloseModalButton
             aria-label="Close modal"
-            onClick={() => setShowModal((prev) => !prev)}
+            onClick={() => {
+              setShowModal((prev) => !prev);
+              setPreviewSource(null);
+            }}
           />
-          <animated.div style={animation}>
-            <ModalWrapper showModal={showModal}>
-              {palette &&
-                palette.colors.map((color) => {
-                  let result = determinDarkLight(color);
-                  return (
-                    <SwatchUnit
-                      onClick={() => {
-                        navigator.clipboard.writeText(color);
-                      }}
-                      isLight={result}
-                      style={{ backgroundColor: color }}
-                    >
-                      {color}
-                    </SwatchUnit>
-                  );
-                })}
-
-              {/* <SwatchUnit
-                   src={require("./modal.jpg")}
-                alt="camera"
-              /> */}
-              {/* <ModalContent>
-                <h1>Are you ready?</h1>
-                <p>Get exclusive access to our next launch.</p>
-                <button>Join Now</button>
-              </ModalContent> */}
-            </ModalWrapper>
-            <ModalWrapperSub>
-              {palette.thumb && <ModalImg src={palette.thumb} />}
-              {palette.name && <ModalContent>{palette.name}</ModalContent>}
-              <ModalButton palette={palette} setResponse={setResponse} />
-            </ModalWrapperSub>
-          </animated.div>
+          <RowFlex>
+            <animated.div style={animation}>
+              <ModalWrapper showModal={showModal}>
+                {previewSource && (
+                  <img
+                    src={previewSource}
+                    alt="chosen"
+                    style={{ height: "300px" }}
+                  />
+                )}
+                {palette &&
+                  palette.colors.map((color) => {
+                    let result = determinDarkLight(color);
+                    return (
+                      <SwatchUnit
+                        onClick={() => {
+                          navigator.clipboard.writeText(color);
+                        }}
+                        isLight={result}
+                        style={{ backgroundColor: color }}
+                      >
+                        {color}
+                      </SwatchUnit>
+                    );
+                  })}
+              </ModalWrapper>
+              <ModalWrapperSub>
+                {imageID && (
+                  <ModalImg
+                    cloudName="belteshazzarj"
+                    publicId={imageID}
+                    height="150"
+                    crop="scale"
+                  />
+                )}
+                {palette.name && <ModalContent>{palette.name}</ModalContent>}
+                <ModalButton
+                  palette={palette}
+                  setResponse={setResponse}
+                  imageID={imageID}
+                  setImageID={setImageID}
+                  previewSource={previewSource}
+                  setPreviewSource={setPreviewSource}
+                />
+              </ModalWrapperSub>
+            </animated.div>
+          </RowFlex>
           <Notifications response={response} setResponse={setResponse} />
         </Background>
       ) : null}

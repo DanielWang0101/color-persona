@@ -8,6 +8,7 @@
   "dependencies": {
     "assert": "^2.0.0",
     "axios": "^0.24.0",
+    "cloudinary": "^1.27.1",
     "color": "^4.1.0",
     "complementary-colors": "^1.0.6",
     "cors": "^2.8.5",

@@ -11,7 +11,7 @@ import { savePalette } from "./handlers/SavePalette.mjs";
 import { getCommunity } from "./handlers/CommunityFeed.mjs";
 // import { getImagesPalette } from "./unsplash/data.mjs";
 import { sharePalette } from "./handlers/SharePalette.mjs";
-
+import { uploadImage } from "./handlers/UploadImage.mjs";
 //port
 const PORT = 8080;
 
@@ -30,7 +30,7 @@ express()
   .use(morgan("tiny"))
   .use(helmet())
   .use(express.static("./server/assets"))
-  .use(express.json())
+  .use(express.json({ limit: "50mb" }))
   .use(express.urlencoded({ extended: false }))
   // .use("/", express.static(__dirname + "/"))
 
@@ -47,6 +47,7 @@ express()
   .put("/api/palette/save", savePalette)
   .post("/api/palette/share", sharePalette)
   .get("/api/community", getCommunity)
+  .post("/api/upload", uploadImage)
   // .get("/api/inspiration", getImagesPalette)
 
   // catch all endpoint

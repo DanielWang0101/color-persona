@@ -6,7 +6,16 @@ import { FormContext } from "../../Context/FormContext";
 import { CurrentUserContext } from "../../Context/CurrentUserContext";
 import { CommunityContext } from "../../Context/CommunityContext";
 import DropDown from "../../Home/Form/DropDown";
-const ModalButton = ({ palette, setResponse }) => {
+import UploadButton from "./UploadButton";
+
+const ModalButton = ({
+  palette,
+  setResponse,
+  imageID,
+  setImageID,
+  previewSource,
+  setPreviewSource,
+}) => {
   console.log("🚀 ~ palette", palette);
   const { isAuthenticated, isLoading, user } = useAuth0();
   const { selectedArchive } = useContext(FormContext);
@@ -62,6 +71,29 @@ const ModalButton = ({ palette, setResponse }) => {
       setCurrentUserUpdate(!currentUserUpdate);
 
       setCommunityUpdate(!communityUpdate);
+    } else if (!isLoading && isAuthenticated && previewSource) {
+      const response = await fetch("/api/palette/share", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          id: palette._id,
+          user: user.sub,
+          name: user.name,
+          picture: user.picture,
+          email: user.email,
+          colors: palette.colors,
+          archiveName: selectedArchive,
+          paletteName: palette.paletteName,
+          previewSource,
+        }),
+      }).then((res) => res.json());
+      setResponse(response);
+      setCurrentUserUpdate(!currentUserUpdate);
+
+      setCommunityUpdate(!communityUpdate);
     }
   };
   if (
@@ -87,6 +119,12 @@ const ModalButton = ({ palette, setResponse }) => {
     return (
       <>
         <ButtonShare handleSharePalette={handleSharePalette} />
+        <UploadButton
+          imageID={imageID}
+          setImageID={setImageID}
+          previewSource={previewSource}
+          setPreviewSource={setPreviewSource}
+        />
       </>
     );
   } else {
