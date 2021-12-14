@@ -14,6 +14,9 @@ const NavLinkGroup = () => {
       <Links exact={true} to="/inspiration" activeClassName="active">
         INSPIRATION
       </Links>
+      <Links exact={true} to="/community" activeClassName="active">
+        COMMUNITY
+      </Links>
     </NavLinksContainer>
   );
 };

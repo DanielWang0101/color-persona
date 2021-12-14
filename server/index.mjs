@@ -8,14 +8,9 @@ import cors from "cors";
 // handlers
 import { getArchive, createNewArchive } from "./handlers/CreateArchive.mjs";
 import { savePalette } from "./handlers/SavePalette.mjs";
-import { getImagesPalette } from "./unsplash/data.mjs";
-// const { getItemById } = require("./handlers/getItemById.js");
-// const { updateItemStock } = require("./handlers/updateItemStock.js");
-// const { getCompanyById } = require("./handlers/getCompanyById.js");
-// const { getItemsByCompany } = require("./handlers/getItemsByCompany.js");
-// const { getItemsByBodypart } = require("./handlers/getItemByBodypart.js");
-// const { getItemsByOrder } = require("./handlers/getItemsByOrder.js");
-// const { getAllCompanies } = require("./handlers/getAllCompanies");
+import { getCommunity } from "./handlers/CommunityFeed.mjs";
+// import { getImagesPalette } from "./unsplash/data.mjs";
+import { sharePalette } from "./handlers/SharePalette.mjs";
 
 //port
 const PORT = 8080;
@@ -50,21 +45,9 @@ express()
   .get("/api/archives/:user", getArchive)
   .post("/api/archive/create", createNewArchive)
   .put("/api/palette/save", savePalette)
-  .get("/api/inspiration", getImagesPalette)
-  // get single item by id
-  //   .get("/foabt/items/:_id", getItemById)
-  //   // update item stock takes body {_id, numPurchased}
-  //   .put("/foabt/items/", updateItemStock)
-  //   // get all companies
-  //   .get("/foabt/company/allCompanies", getAllCompanies)
-  //   // get company by id
-  //   .get("/foabt/company/:_id", getCompanyById)
-  //   // get items by company
-  //   .get("/foabt/items/company/:companyId", getItemsByCompany)
-  //   // get items by body part
-  //   .get("/foabt/items/bodypart/:part", getItemsByBodypart)
-  //   //get items by order
-  //   .post("/foabt/items", getItemsByOrder)
+  .post("/api/palette/share", sharePalette)
+  .get("/api/community", getCommunity)
+  // .get("/api/inspiration", getImagesPalette)
 
   // catch all endpoint
   .get("*", (req, res) => {
@@ -73,6 +56,8 @@ express()
       message: "This page does not exist.",
     });
   })
-
+  //killing the process
+  //netstat -ano | findstr :8080
+  //taskkill /F /PID 12017(or whatever the process ID is)
   // our port
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));

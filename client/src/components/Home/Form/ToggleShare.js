@@ -8,7 +8,8 @@ import {
 const ToggleShare = ({ checked, setChecked }) => {
   return (
     <ButtonToggle
-      onClick={() => {
+      onClick={(ev) => {
+        ev.preventDefault();
         setChecked(!checked);
       }}
     >

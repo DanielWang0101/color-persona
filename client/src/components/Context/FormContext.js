@@ -11,10 +11,6 @@ const FromProvider = ({ children }) => {
   } = useContext(ColorInputContext);
   const { isAuthenticated, user, isLoading } = useAuth0();
   // set form values prepare for submit
-
-  //   const [archives, setArchives] = useState([]);
-  //   const [currentUserUpdate, setCurrentUserUpdate] = useState(false);
-
   // Two useEffects
   // 1. Create a new Archive
   // States required
@@ -35,9 +31,8 @@ const FromProvider = ({ children }) => {
       return response;
     }
   };
-  // 2. Update an Archive (require attention)
+  // 2. Update an Archive/ Share an Archive (require attention)
   const [selectedArchive, setSelectedArchive] = useState("select an option");
-  const [scheme, setScheme] = useState([]);
   const [paletteName, setPaletteName] = useState("My Color Theme");
 
   const handleSavePalette = async () => {
@@ -58,6 +53,29 @@ const FromProvider = ({ children }) => {
       return response;
     }
   };
+
+  const handleSharePalette = async () => {
+    if (!isLoading && isAuthenticated) {
+      const response = await fetch("/api/palette/share", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          user: user.sub,
+          name: user.name,
+          picture: user.picture,
+          email: user.email,
+          colors: [colorA, colorB, baseColor, colorD, colorE],
+          archiveName: selectedArchive,
+          paletteName,
+        }),
+      }).then((res) => res.json());
+      console.log(response);
+    }
+  };
+
   //   useEffect(() => {
   //     if (!isAuthenticated) {
   //       setArchives([
@@ -82,6 +100,7 @@ const FromProvider = ({ children }) => {
         paletteName,
         setPaletteName,
         handleSavePalette,
+        handleSharePalette,
       }}
     >
       {children}

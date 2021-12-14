@@ -18,16 +18,18 @@ import {
   PlusButton,
   Button,
 } from "./styled-components";
+import { CommunityContext } from "../../Context/CommunityContext";
 
 const Form = ({ setRule }) => {
   const {
     baseColor,
     swatch: { colorA, colorB, colorD, colorE },
   } = useContext(ColorInputContext);
-  const { paletteName, setPaletteName, handleSavePalette } =
+  const { paletteName, setPaletteName, handleSavePalette, handleSharePalette } =
     useContext(FormContext);
   const { currentUserUpdate, setCurrentUserUpdate } =
     useContext(CurrentUserContext);
+  const { communityUpdate, setCommunityUpdate } = useContext(CommunityContext);
   const [toggle, setToggle] = useState(false);
   const [checked, setChecked] = useState(false);
   //state for notifications
@@ -40,6 +42,10 @@ const Form = ({ setRule }) => {
         const res = await handleSavePalette();
         setResponse(res);
         setCurrentUserUpdate(!currentUserUpdate);
+        if (checked) {
+          await handleSharePalette();
+          setCommunityUpdate(!communityUpdate);
+        }
       }}
     >
       <MiniSwatch
