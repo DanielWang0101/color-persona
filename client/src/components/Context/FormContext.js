@@ -44,8 +44,11 @@ const FromProvider = ({ children }) => {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          colors: [colorA, colorB, baseColor, colorD, colorE],
           user: user.sub,
+          name: user.name,
+          picture: user.picture,
+          email: user.email,
+          colors: [colorA, colorB, baseColor, colorD, colorE],
           archiveName: selectedArchive,
           paletteName,
         }),

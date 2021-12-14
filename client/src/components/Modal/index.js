@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
 import { useSpring, animated } from "react-spring";
 import {
   Background,
@@ -9,11 +15,15 @@ import {
   CloseModalButton,
   ModalWrapperSub,
 } from "./styled-components";
+import { CurrentUserContext } from "../Context/CurrentUserContext";
+import Notifications from "../Home/Form/Notifications";
+import ModalButton from "./ModalButtons";
 import { determinDarkLight } from "../Home/ColorWheel/getColors/determineDarkorLight";
 // onMouseOver={() => setText('David')}
 // onMouseLeave={() => setText(initialTxt)}
 const Modal = ({ showModal, setShowModal, palette }) => {
   const modalRef = useRef();
+  const [response, setResponse] = useState(null);
 
   const animation = useSpring({
     config: {
@@ -83,8 +93,10 @@ const Modal = ({ showModal, setShowModal, palette }) => {
             <ModalWrapperSub>
               {palette.thumb && <ModalImg src={palette.thumb} />}
               {palette.name && <ModalContent>{palette.name}</ModalContent>}
+              <ModalButton palette={palette} setResponse={setResponse} />
             </ModalWrapperSub>
           </animated.div>
+          <Notifications response={response} setResponse={setResponse} />
         </Background>
       ) : null}
     </>

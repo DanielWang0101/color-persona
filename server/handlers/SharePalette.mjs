@@ -82,6 +82,7 @@ export const sharePalette = async (req, res) => {
         thumb,
         regular,
         created_at: Date.now(),
+        public: true,
       });
 
       await client.close();
@@ -105,6 +106,7 @@ export const sharePalette = async (req, res) => {
         thumb,
         regular,
         created_at: Date.now(),
+        public: true,
       });
       const userArchive = await db.collection(collectionName).find().toArray();
       await client.close();

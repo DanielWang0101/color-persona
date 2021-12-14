@@ -18,7 +18,13 @@ const Archive = () => {
           >
             {archive.palettes &&
               archive.palettes.map((palette) => {
-                return <MiniSwatch palette={palette} />;
+                return (
+                  <div>
+                    <MiniSwatch palette={palette} />
+                    <div>{palette.paletteName}</div>
+                    <div>{palette.name}</div>
+                  </div>
+                );
               })}
           </Accordion>
         );

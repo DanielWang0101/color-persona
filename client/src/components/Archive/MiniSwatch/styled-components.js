@@ -29,7 +29,7 @@ export const ColorList = styled.div`
 
   /* width: 100%; */
 `;
-export const FlexColumn = styled.form`
+export const FlexColumn = styled.div`
   /* width: 100%; */
   display: flex;
   flex-flow: column nowrap;

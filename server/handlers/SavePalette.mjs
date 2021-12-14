@@ -24,7 +24,15 @@ export const savePalette = async (req, res) => {
     // const archiveName = "color-persona";
     // const paletteName = "My Color Theme";
 
-    const { colors, user, archiveName, paletteName } = req.body;
+    // user: user.sub,
+    // name: user.name,
+    // picture: user.picture,
+    // email: user.email,
+    // colors: [colorA, colorB, baseColor, colorD, colorE],
+    // archiveName: selectedArchive,
+    // paletteName,
+    const { colors, user, name, picture, email, archiveName, paletteName } =
+      req.body;
 
     if (archiveName === "select an option") {
       return res.status(400).json({
@@ -60,7 +68,15 @@ export const savePalette = async (req, res) => {
         { _id: archiveName },
         {
           $push: {
-            palettes: { _id: uuidv4(), name: paletteName, colors: colors },
+            palettes: {
+              _id: uuidv4(),
+              paletteName,
+              colors,
+              name,
+              picture,
+              email,
+              archiveName,
+            },
           },
         }
       );
@@ -80,7 +96,15 @@ export const savePalette = async (req, res) => {
         { _id: archiveName },
         {
           $push: {
-            palettes: { _id: uuidv4(), name: paletteName, colors: colors },
+            palettes: {
+              _id: uuidv4(),
+              paletteName,
+              colors,
+              name,
+              picture,
+              email,
+              archiveName,
+            },
           },
         }
       );

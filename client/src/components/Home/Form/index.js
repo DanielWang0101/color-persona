@@ -79,7 +79,7 @@ const Form = ({ setRule }) => {
       </FlexRow>
       <FlexRow>
         <ToggleShare checked={checked} setChecked={setChecked} /> Publish to
-        Inspiration
+        Community
       </FlexRow>
       <CreateArchiveMenu
         setToggle={setToggle}

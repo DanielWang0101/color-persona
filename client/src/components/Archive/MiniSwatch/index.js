@@ -15,7 +15,7 @@ const MiniSwatch = ({ palette }) => {
           return <Cube style={{ backgroundColor: color }} />;
         })}
       </ColorList>
-      <div>{palette.name}</div>
+
       <Modal
         showModal={showModal}
         setShowModal={setShowModal}
