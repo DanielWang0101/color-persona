@@ -13,7 +13,6 @@ const unsplash = createApi({
 const InspirationProvider = ({ children }) => {
   const { isAuthenticated, user, isLoading } = useAuth0();
   const [gallery, setGallery] = useState(null);
-  console.log("🚀 ~ gallery", gallery);
   //   const [currentUserUpdate, setCurrentUserUpdate] = useState(false);
 
   useEffect(() => {

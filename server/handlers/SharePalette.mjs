@@ -38,6 +38,7 @@ export const sharePalette = async (req, res) => {
     //   "https://images.unsplash.com/photo-1596536220655-21429cf12ae0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODI2OTN8MHwxfHNlYXJjaHwxfHxncmFwaGljJTIwYXJ0fGVufDB8fHx8MTYzOTM2MDkwNg&ixlib=rb-1.2.1&q=80&w=1080";
     // const sub = "auth0|61b26232f64d4a0072acb539";
     const {
+      id,
       user,
       name,
       picture,
@@ -71,7 +72,7 @@ export const sharePalette = async (req, res) => {
 
       // create this Public document
       await db.collection(collectionName).insertOne({
-        _id: uuidv4(),
+        _id: id,
         user,
         name,
         picture,
@@ -84,7 +85,15 @@ export const sharePalette = async (req, res) => {
         created_at: Date.now(),
         public: true,
       });
-
+      // Update user's archive
+      await db.collection(user).updateOne(
+        { _id: archiveName, "palettes._id": id },
+        {
+          $set: {
+            "palettes.$.shared": true,
+          },
+        }
+      );
       await client.close();
       return res.status(200).json({
         status: 200,
@@ -95,7 +104,7 @@ export const sharePalette = async (req, res) => {
       // if Public exists
       //insert the document into Public collection
       await db.collection(collectionName).insertOne({
-        _id: uuidv4(),
+        _id: id,
         user,
         name,
         picture,
@@ -108,6 +117,15 @@ export const sharePalette = async (req, res) => {
         created_at: Date.now(),
         public: true,
       });
+      // Update user's archive
+      await db.collection(user).updateOne(
+        { _id: archiveName, "palettes._id": id },
+        {
+          $set: {
+            "palettes.$.shared": true,
+          },
+        }
+      );
       const userArchive = await db.collection(collectionName).find().toArray();
       await client.close();
 
@@ -127,3 +145,31 @@ export const sharePalette = async (req, res) => {
     });
   }
 };
+
+// const test = async () => {
+//   const user = "auth0|61b26232f64d4a0072acb539";
+//   const id = "d933107a-1966-47e0-91d0-49bd5e806332";
+//   const archiveName = "test";
+//   //create a new client
+//   const client = new MongoClient(MONGO_URI, options);
+//   // connect to the client
+//   try {
+//     await client.connect();
+//     const db = client.db("color-persona");
+//     console.log("CONNECTED");
+//     await db.collection(user).updateOne(
+//       { _id: archiveName, "palettes._id": id },
+//       {
+//         $set: {
+//           "palettes.$.shared": true,
+//         },
+//       }
+//     );
+
+//     await client.close();
+//     console.log("success");
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+// };
+// test();

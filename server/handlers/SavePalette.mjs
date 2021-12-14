@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { MongoClient } from "mongodb";
 //get URI
 import dotenv from "dotenv";
+import assert from "assert";
 dotenv.config();
 
 //{ path: "./server/.env" }
@@ -28,10 +29,10 @@ export const savePalette = async (req, res) => {
     // name: user.name,
     // picture: user.picture,
     // email: user.email,
-    // colors: [colorA, colorB, baseColor, colorD, colorE],
+    // colors: [colorA, colorB, baseColor, colorD, colorE],59df54a3-83c7-4b87-aa89-ba49305fa3a4
     // archiveName: selectedArchive,
     // paletteName,
-    const { colors, user, name, picture, email, archiveName, paletteName } =
+    const { id, colors, user, name, picture, email, archiveName, paletteName } =
       req.body;
 
     if (archiveName === "select an option") {
@@ -63,25 +64,58 @@ export const savePalette = async (req, res) => {
       await db.collection(user).insertOne({ _id: "My Archive" });
       // create his new archive document
       await db.collection(user).insertOne({ _id: archiveName });
-      //insert the information into this new document
-      await db.collection(user).updateOne(
-        { _id: archiveName },
-        {
-          $push: {
-            palettes: {
-              _id: uuidv4(),
-              paletteName,
-              colors,
-              name,
-              picture,
-              email,
-              archiveName,
+      // check if the id exists in the community
+      const publicPost = await db.collection("Public").findOne({ _id: id });
+      if (!publicPost) {
+        //insert the information into this new document
+        await db.collection(user).updateOne(
+          { _id: archiveName },
+          {
+            $push: {
+              palettes: {
+                _id: id,
+                user: user,
+                paletteName,
+                colors,
+                name,
+                picture,
+                email,
+                archiveName,
+                orginial: true,
+              },
             },
+          }
+        );
+      } else if (publicPost) {
+        await db.collection(user).updateOne(
+          { _id: archiveName },
+          {
+            $push: {
+              palettes: {
+                _id: id,
+                user: publicPost.user,
+                paletteName,
+                colors,
+                name: publicPost.name,
+                picture: publicPost.picture,
+                email: publicPost.email,
+                archiveName,
+                orginial: false,
+              },
+            },
+          }
+        );
+      }
+
+      // update public archive
+      await db.collection("Public").updateOne(
+        { _id: id },
+        {
+          $set: {
+            saved: true,
           },
         }
       );
-
-      await client.close();
       await client.close();
       return res.status(200).json({
         status: 200,
@@ -92,37 +126,67 @@ export const savePalette = async (req, res) => {
     } else {
       // if old user
       //insert the information into this new document
-      await db.collection(user).updateOne(
-        { _id: archiveName },
-        {
-          $push: {
-            palettes: {
-              _id: uuidv4(),
-              paletteName,
-              colors,
-              name,
-              picture,
-              email,
-              archiveName,
+      // check if the id exists in the community
+      const publicPost = await db.collection("Public").findOne({ _id: id });
+      if (!publicPost) {
+        //insert the information into this new document
+        await db.collection(user).updateOne(
+          { _id: archiveName },
+          {
+            $push: {
+              palettes: {
+                _id: id,
+                user: user,
+                paletteName,
+                colors,
+                name,
+                picture,
+                email,
+                archiveName,
+                orginial: true,
+              },
             },
+          }
+        );
+      } else if (publicPost) {
+        await db.collection(user).updateOne(
+          { _id: archiveName },
+          {
+            $push: {
+              palettes: {
+                _id: id,
+                user: publicPost.user,
+                paletteName,
+                colors,
+                name: publicPost.name,
+                picture: publicPost.picture,
+                email: publicPost.email,
+                archiveName,
+                orginial: false,
+              },
+            },
+          }
+        );
+      }
+      // update public archive
+      const validation = await db.collection("Public").updateOne(
+        { _id: id },
+        {
+          $set: {
+            saved: true,
           },
         }
       );
-      const userArchive = await db
-        .collection(user)
-        .findOne({ _id: archiveName });
+
       await client.close();
       return res.status(200).json({
         status: 200,
         new_user: false,
         message: "Palette Saved",
         success: true,
-        data: userArchive,
       });
     }
   } catch (err) {
-    await client.close();
-
     return res.status(400).json({
       status: 400,
       message: err.message,
@@ -130,6 +194,26 @@ export const savePalette = async (req, res) => {
     });
   }
 };
+// const test = async () => {
+//   const user = "google-oauth2|102882651941532691840";
+//   const id = "e6c3b184-b110-4dbf-ae38-3c9489d28ac0";
+//   const archiveName = "test";
+//   //create a new client
+//   const client = new MongoClient(MONGO_URI, options);
+//   // connect to the client
+//   try {
+//     await client.connect();
+//     const db = client.db("color-persona");
+//     console.log("CONNECTED");
+//     const result = await db.collection("Public").findOne({ _id: id });
+
+//     await client.close();
+//     console.log(result);
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+// };
+// test();
 
 // collection user
 /*
