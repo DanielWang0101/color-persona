@@ -32,11 +32,12 @@ const ModalButton = ({
         },
         body: JSON.stringify({
           id: palette._id,
-
+          regular: palette.regular,
+          publicId: palette.publicId,
           user: user.sub,
-          name: user.name,
-          picture: user.picture,
-          email: user.email,
+          name: palette.name,
+          picture: palette.picture,
+          email: palette.email,
           colors: palette.colors,
           archiveName: selectedArchive,
           paletteName: palette.paletteName,
@@ -49,7 +50,7 @@ const ModalButton = ({
   };
 
   const handleSharePalette = async () => {
-    if (!isLoading && isAuthenticated) {
+    if (!isLoading && isAuthenticated && !previewSource) {
       const response = await fetch("/api/palette/share", {
         method: "POST",
         headers: {
@@ -63,7 +64,7 @@ const ModalButton = ({
           picture: user.picture,
           email: user.email,
           colors: palette.colors,
-          archiveName: selectedArchive,
+          archiveName: palette.archiveName,
           paletteName: palette.paletteName,
         }),
       }).then((res) => res.json());
@@ -85,7 +86,7 @@ const ModalButton = ({
           picture: user.picture,
           email: user.email,
           colors: palette.colors,
-          archiveName: selectedArchive,
+          archiveName: palette.archiveName,
           paletteName: palette.paletteName,
           previewSource,
         }),
@@ -96,11 +97,13 @@ const ModalButton = ({
       setCommunityUpdate(!communityUpdate);
     }
   };
+  let isSavedByCurrentUser = palette.savedBy.includes(user.sub);
+
   if (
     palette.public &&
-    palette.user !== user.sub &&
+    palette.user !== user.sub && //dont save user's own post
     palette.user &&
-    !palette.saved
+    !isSavedByCurrentUser
   ) {
     //If palette is in community, created by other user and not saved previously
     return (

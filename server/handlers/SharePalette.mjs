@@ -1,13 +1,23 @@
 "use strict";
 import { v4 as uuidv4 } from "uuid";
+import cloudinary from "cloudinary";
+
 // uuidv4();
 //require Mongodb
 import { MongoClient } from "mongodb";
 //get URI
 import dotenv from "dotenv";
 dotenv.config({ path: "./server/.env" });
-
 //{ path: "./server/.env" }
+//cloudinary
+const { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, CLOUDINARY_CLOUD_NAME } =
+  process.env;
+cloudinary.config({
+  cloud_name: CLOUDINARY_CLOUD_NAME,
+  api_key: CLOUDINARY_API_KEY,
+  api_secret: CLOUDINARY_API_SECRET,
+});
+//mongo
 const { MONGO_URI } = process.env;
 
 const options = {
@@ -46,8 +56,9 @@ export const sharePalette = async (req, res) => {
       colors,
       archiveName,
       paletteName,
-      thumb,
-      regular,
+      // publicId,
+      // regular,
+      previewSource,
     } = req.body;
     if (archiveName === "select an option") {
       return res.status(400).json({
@@ -69,71 +80,156 @@ export const sharePalette = async (req, res) => {
     if (!ifPublicExists) {
       //if Public does not exist, create this collection
       await db.createCollection(collectionName);
-
-      // create this Public document
-      await db.collection(collectionName).insertOne({
-        _id: id,
-        user,
-        name,
-        picture,
-        email,
-        colors,
-        archiveName,
-        paletteName,
-        thumb,
-        regular,
-        created_at: Date.now(),
-        public: true,
-      });
-      // Update user's archive
-      await db.collection(user).updateOne(
-        { _id: archiveName, "palettes._id": id },
-        {
-          $set: {
-            "palettes.$.shared": true,
-          },
-        }
-      );
-      await client.close();
-      return res.status(200).json({
-        status: 200,
-        message: "Palette Shared",
-        success: true,
-      });
+      if (previewSource) {
+        const uploadedResponse = await cloudinary.uploader.upload(
+          previewSource,
+          {
+            upload_preset: "ml_default",
+          }
+        );
+        const publicId = uploadedResponse.public_id;
+        const regular = uploadedResponse.url;
+        // create this Public document
+        await db.collection(collectionName).insertOne({
+          _id: id,
+          user,
+          name,
+          picture,
+          email,
+          colors,
+          archiveName,
+          paletteName,
+          publicId,
+          regular,
+          created_at: Date.now(),
+          public: true,
+        });
+        // Update user's archive
+        await db.collection(user).updateOne(
+          { _id: archiveName, "palettes._id": id },
+          {
+            $set: {
+              "palettes.$.shared": true,
+            },
+          }
+        );
+        await client.close();
+        return res.status(200).json({
+          status: 200,
+          message: "Palette Shared",
+          success: true,
+        });
+      } else {
+        await db.collection(collectionName).insertOne({
+          _id: id,
+          user,
+          name,
+          picture,
+          email,
+          colors,
+          archiveName,
+          paletteName,
+          created_at: Date.now(),
+          public: true,
+        });
+        // Update user's archive
+        await db.collection(user).updateOne(
+          { _id: archiveName, "palettes._id": id },
+          {
+            $set: {
+              "palettes.$.shared": true,
+            },
+          }
+        );
+        await client.close();
+        return res.status(200).json({
+          status: 200,
+          message: "Palette Shared",
+          success: true,
+        });
+      }
     } else {
       // if Public exists
-      //insert the document into Public collection
-      await db.collection(collectionName).insertOne({
-        _id: id,
-        user,
-        name,
-        picture,
-        email,
-        colors,
-        archiveName,
-        paletteName,
-        thumb,
-        regular,
-        created_at: Date.now(),
-        public: true,
-      });
-      // Update user's archive
-      await db.collection(user).updateOne(
-        { _id: archiveName, "palettes._id": id },
-        {
-          $set: {
-            "palettes.$.shared": true,
-          },
-        }
-      );
-      const userArchive = await db.collection(collectionName).find().toArray();
-      await client.close();
+      if (previewSource) {
+        const uploadedResponse = await cloudinary.uploader.upload(
+          previewSource,
+          {
+            upload_preset: "ml_default",
+          }
+        );
+        const publicId = uploadedResponse.public_id;
+        const regular = uploadedResponse.url;
 
-      return res.status(200).json({
-        status: 200,
-        message: "Palette Shared",
-        success: true,
-      });
+        //insert the document into Public collection
+        await db.collection(collectionName).insertOne({
+          _id: id,
+          user,
+          name,
+          picture,
+          email,
+          colors,
+          archiveName,
+          paletteName,
+          publicId,
+          regular,
+          created_at: Date.now(),
+          public: true,
+        });
+        // Update user's archive
+        await db.collection(user).updateOne(
+          { _id: archiveName, "palettes._id": id },
+          {
+            $set: {
+              "palettes.$.shared": true,
+            },
+          }
+        );
+        // const userArchive = await db
+        //   .collection(collectionName)
+        //   .find()
+        //   .toArray();
+        await client.close();
+
+        return res.status(200).json({
+          status: 200,
+          message: "Palette Shared",
+          success: true,
+        });
+      } else {
+        //insert the document into Public collection
+        await db.collection(collectionName).insertOne({
+          _id: id,
+          user,
+          name,
+          picture,
+          email,
+          colors,
+          archiveName,
+          paletteName,
+          created_at: Date.now(),
+          public: true,
+        });
+        // Update user's archive
+        await db.collection(user).updateOne(
+          { _id: archiveName, "palettes._id": id },
+          {
+            $set: {
+              "palettes.$.shared": true,
+            },
+          }
+        );
+        // const userArchive = await db
+        //   .collection(collectionName)
+        //   .find()
+        //   .toArray();
+        await client.close();
+
+        return res.status(200).json({
+          status: 200,
+          message: "Palette Shared",
+          success: true,
+        });
+      }
     }
   } catch (err) {
     await client.close();

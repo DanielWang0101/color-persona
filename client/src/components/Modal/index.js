@@ -95,14 +95,6 @@ const Modal = ({ showModal, setShowModal, palette }) => {
                   })}
               </ModalWrapper>
               <ModalWrapperSub>
-                {imageID && (
-                  <ModalImg
-                    cloudName="belteshazzarj"
-                    publicId={imageID}
-                    height="150"
-                    crop="scale"
-                  />
-                )}
                 {palette.name && <ModalContent>{palette.name}</ModalContent>}
                 <ModalButton
                   palette={palette}

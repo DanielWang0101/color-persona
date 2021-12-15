@@ -47,7 +47,7 @@ express()
   .put("/api/palette/save", savePalette)
   .post("/api/palette/share", sharePalette)
   .get("/api/community", getCommunity)
-  .post("/api/upload", uploadImage)
+  // .post("/api/upload", uploadImage)
   // .get("/api/inspiration", getImagesPalette)
 
   // catch all endpoint

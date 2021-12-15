@@ -31,9 +31,30 @@ export const savePalette = async (req, res) => {
     // email: user.email,
     // colors: [colorA, colorB, baseColor, colorD, colorE],59df54a3-83c7-4b87-aa89-ba49305fa3a4
     // archiveName: selectedArchive,
-    // paletteName,
-    const { id, colors, user, name, picture, email, archiveName, paletteName } =
-      req.body;
+    // paletteName,regular: palette.regular,
+
+    // id: palette._id,
+    // regular: palette.regular,
+    // publicId: palette.publicId,
+    // user: palette.sub,
+    // name: palette.name,
+    // picture: palette.picture,
+    // email: palette.email,
+    // colors: palette.colors,
+    // archiveName: selectedArchive,
+    // paletteName: palette.paletteName,
+    const {
+      id,
+      colors,
+      user,
+      name,
+      picture,
+      email,
+      archiveName,
+      paletteName,
+      publicId,
+      regular,
+    } = req.body;
 
     if (archiveName === "select an option") {
       return res.status(400).json({
@@ -67,6 +88,7 @@ export const savePalette = async (req, res) => {
       // check if the id exists in the community
       const publicPost = await db.collection("Public").findOne({ _id: id });
       if (!publicPost) {
+        // if this palette is created by current user
         //insert the information into this new document
         await db.collection(user).updateOne(
           { _id: archiveName },
@@ -82,11 +104,15 @@ export const savePalette = async (req, res) => {
                 email,
                 archiveName,
                 orginial: true,
+                publicId,
+                regular,
               },
             },
           }
         );
       } else if (publicPost) {
+        // if this palette is from the public created by other user
+
         await db.collection(user).updateOne(
           { _id: archiveName },
           {
@@ -101,6 +127,8 @@ export const savePalette = async (req, res) => {
                 email: publicPost.email,
                 archiveName,
                 orginial: false,
+                publicId: publicPost.publicId,
+                regular: publicPost.regular,
               },
             },
           }
@@ -108,11 +136,12 @@ export const savePalette = async (req, res) => {
       }
 
       // update public archive
+      // mark this post is saved by the user
       await db.collection("Public").updateOne(
         { _id: id },
         {
-          $set: {
-            saved: true,
+          $push: {
+            savedBy: user,
           },
         }
       );
@@ -144,6 +173,8 @@ export const savePalette = async (req, res) => {
                 email,
                 archiveName,
                 orginial: true,
+                publicId,
+                regular,
               },
             },
           }
@@ -163,17 +194,20 @@ export const savePalette = async (req, res) => {
                 email: publicPost.email,
                 archiveName,
                 orginial: false,
+                publicId: publicPost.publicId,
+                regular: publicPost.regular,
               },
             },
           }
         );
       }
       // update public archive
-      const validation = await db.collection("Public").updateOne(
+      // mark this post is saved by the user
+      await db.collection("Public").updateOne(
         { _id: id },
         {
-          $set: {
-            saved: true,
+          $push: {
+            savedBy: user,
           },
         }
       );
@@ -237,6 +271,11 @@ export const savePalette = async (req, res) => {
     {_id:"UUID", name: "My Color Theme", colors:[]},
   ]
 }
+
+
+Expected 'create' to be string, but got <nil> instead. Doc = [{create <nil>} {writeConcern [{w majority}]} {lsid [{id {4 [28 63 4 107 32 179 66 3 187 152 203 105 55 222 100 123]}}]} {$clusterTime [{clusterTime {1639582715 3}} {signature [{hash {0 [231 244 17 17 76 132 151 220 92 69 249 149 227 19 121 156 204 180 82 19]}} {keyId 6995915973249204225}]}]} {$db color-persona}]
+
+
 
 */
 

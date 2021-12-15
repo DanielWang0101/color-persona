@@ -27,7 +27,6 @@ const UploadButton = ({
 
   return (
     <div>
-      <h3>Upload</h3>
       <form>
         <input
           type={"file"}
@@ -35,7 +34,6 @@ const UploadButton = ({
           onChange={handleFileInputChange}
           value={fileInput}
         />
-        <button type="submit">Submit</button>
       </form>
     </div>
   );
