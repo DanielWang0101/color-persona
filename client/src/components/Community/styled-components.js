@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Masonry = styled.div`
   display: flex;
   flex-flow: column wrap;
-height: 800px;
+height: 600px;
 align-items:flex-start;
 justify-content:flex-start;
 align-content:flex-start;

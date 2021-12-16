@@ -13,13 +13,14 @@ const unsplash = createApi({
 const InspirationProvider = ({ children }) => {
   const { isAuthenticated, user, isLoading } = useAuth0();
   const [gallery, setGallery] = useState(null);
+  const [page, setPage] = useState(1);
   //   const [currentUserUpdate, setCurrentUserUpdate] = useState(false);
 
   useEffect(() => {
     (async () => {
       const resp = await unsplash.search.getPhotos({
         query: "graphic art",
-        page: 1,
+        page: page,
         perPage: 3,
         // color: 'green',
         // orientation: 'portrait',
@@ -61,9 +62,9 @@ const InspirationProvider = ({ children }) => {
     //     .then((res) => res.json())
     //     .then((result) => setArchives(result.data));
     // }
-  }, []);
+  }, [page]);
   return (
-    <InspirationContext.Provider value={{ gallery }}>
+    <InspirationContext.Provider value={{ gallery, setPage }}>
       {children}
     </InspirationContext.Provider>
   );

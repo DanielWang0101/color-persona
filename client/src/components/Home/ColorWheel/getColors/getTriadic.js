@@ -7,7 +7,7 @@ const str1 = "#142814"; //#291529
 // const color = Color(myColor.complementary()[1]).hex();
 // console.log("🚀 ~ color", color);
 // "type": "module",
-export const getComplementaryColor = (color) => {
+export const getTriadicColor = (color) => {
   let reg = /^#([0-9a-f]{3}){1,2}$/i;
   if (!reg.test(color)) {
     color = "#00c3ff";
@@ -16,35 +16,24 @@ export const getComplementaryColor = (color) => {
 
   //Self
   const hexS = Color(myColor.primary()[0]).hex();
-  const rgbS = myColor.primary()[0];
-  const rgbSArray = Color(myColor.primary()[0]).array();
-  //Self-Desaturated
-  const hexSD = Color(myColor.primary()[0]).desaturate(0.4).hex();
-  const rgbSD = Color(hexSD).object();
-  const rgbSDArray = Color(hexSD).rgb().array();
-  //Self-whitened
-  const hexSW = Color(myColor.primary()[0]).lighten(0.2).hex();
-  const rgbSW = Color(hexSW).object();
-  const rgbSWArray = Color(hexSW).rgb().array();
-  //Complementary
+
+  //triadicOne
   // const hex = Color(myColor.complementary()[1]).hex();
-  const hex = Color(hexS).rotate(180).hex();
+  const hexOne = Color(hexS).rotate(120).hex();
+  //triadicOne-Desaturated
+  const hexOneD = Color(hexOne).desaturate(0.4).hex();
 
-  const rgb = myColor.complementary()[0];
-  const rgbArray = Color(myColor.complementary()[1]).array();
-  //ComplementaryD
+  //triadicTwo
   // const hexDark = Color(myColor.complementary()[0]).desaturate(0.4).hex();
-  const hexDark = Color(hex).desaturate(0.4).hex();
-
-  const rgbDark = Color(hexDark).object();
-  const rgbArrayDark = Color(hexDark).rgb().array();
-
+  const hexTwo = Color(hexS).rotate(240).hex();
+  //triadicTwo-whitened
+  const hexTwoW = Color(hexTwo).lighten(0.2).hex();
   const result = {
-    complementary: { hex, rgb, rgbArray },
-    self: { hex: color, rgbS, rgbSArray },
-    complementaryDark: { hexDark, rgbDark, rgbArrayDark },
-    selfDesaturated: { hexSD, rgbSD, rgbSDArray },
-    selfWhitened: { hexSW, rgbSW, rgbSWArray },
+    triadicOne: hexOne,
+    self: hexS,
+    triadicTwo: hexTwo,
+    triadicOneD: hexOneD,
+    triadicTwoW: hexTwoW,
   };
 
   return result;

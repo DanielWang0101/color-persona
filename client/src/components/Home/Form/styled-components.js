@@ -19,7 +19,7 @@ export const FlexRow = styled.div`
 `;
 export const Description = styled.p`
   /* width: 100%; */
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 
   color: grey;
 `;
