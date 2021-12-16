@@ -1,15 +1,17 @@
 import React from "react";
-
+import { Button, AnimatedText } from "./styled-components";
+import { RiSaveFill } from "react-icons/ri";
 const ButtonSave = ({ handleSavePalette }) => {
   return (
-    <button
+    <Button
       onClick={(ev) => {
         ev.preventDefault();
         handleSavePalette();
       }}
     >
+      <RiSaveFill />
       save
-    </button>
+    </Button>
   );
 };
 

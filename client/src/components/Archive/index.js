@@ -29,7 +29,7 @@ const Archive = () => {
           </Accordion>
         );
       })}
-      <Profile />
+      {/* <Profile /> */}
     </>
   );
 };

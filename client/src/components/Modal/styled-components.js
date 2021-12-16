@@ -6,6 +6,14 @@ export const RowFlex = styled.div`
   display: flex;
   flex-flow: row nowrap;
 `;
+export const Avatar = styled.img`
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: none;
+  margin: 0 10px 0 0;
+  outline: 2px solid white;
+`;
 export const Background = styled.div`
   width: 100%;
   height: 100%;
@@ -27,9 +35,9 @@ export const ModalImg = styled(Image)`
   background: #fff;
 `;
 export const ModalWrapper = styled.div`
-  width: 800px;
-  height: 380px;
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+  width: 500px;
+  height: 300px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   background: #fff;
   color: #000;
   min-height: 120px;
@@ -44,7 +52,15 @@ export const ModalWrapper = styled.div`
 `;
 export const ModalWrapperSub = styled(ModalWrapper)`
   height: auto;
-  margin-top: 40px;
+  /* margin-top: 40px; */
+  background-color: transparent;
+  box-shadow: none;
+  align-items: center;
+  justify-content: space-between;
+  overflow: visible;
+  div:first-child {
+    /* margin-right: auto; */
+  }
 `;
 export const SwatchUnit = styled.div`
   width: 100%;
@@ -68,11 +84,15 @@ export const SwatchUnit = styled.div`
 
 export const ModalContent = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   line-height: 1.8;
-  color: #141414;
+  color: black;
+  padding: 10px;
+  background-color: var(--color-light-grey);
+  border-radius: 100px;
+
   p {
     margin-bottom: 1rem;
   }
@@ -93,4 +113,5 @@ export const CloseModalButton = styled(MdClose)`
   height: 32px;
   padding: 0;
   z-index: 10;
+  fill: grey;
 `;

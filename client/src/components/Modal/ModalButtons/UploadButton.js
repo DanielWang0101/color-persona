@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Image } from "cloudinary-react";
+import { Button } from "./styled-components";
+import { BsFillCloudUploadFill } from "react-icons/bs";
+import { Input, Label, AnimatedText } from "./styled-components";
 const UploadButton = ({
   imageID,
   setImageID,
@@ -27,14 +30,17 @@ const UploadButton = ({
 
   return (
     <div>
-      <form>
-        <input
-          type={"file"}
-          name="image"
-          onChange={handleFileInputChange}
-          value={fileInput}
-        />
-      </form>
+      <Input
+        type={"file"}
+        id="file"
+        name="image"
+        onChange={handleFileInputChange}
+        value={fileInput}
+      />
+      <Label for="file">
+        <BsFillCloudUploadFill />
+        Upload a Photo
+      </Label>
     </div>
   );
 };

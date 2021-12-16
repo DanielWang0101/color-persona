@@ -15,7 +15,7 @@ const ToggleShare = ({ checked, setChecked }) => {
     >
       <Container>
         <StyledBackdrop
-          style={checked ? { background: "red" } : { background: "grey" }}
+          style={checked ? { background: "#0084ff" } : { background: "grey" }}
         />
         <Ball
           checked={checked}

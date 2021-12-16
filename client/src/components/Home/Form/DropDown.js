@@ -50,7 +50,7 @@ const SelectBox = styled.div`
   font-family: var(--font-body);
   font-size: var(--font-size-option);
   .dropdown {
-    width: 100px;
+    width: 150px;
     display: inline-block;
     position: relative;
     user-select: none;

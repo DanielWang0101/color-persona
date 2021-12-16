@@ -97,7 +97,10 @@ const ModalButton = ({
       setCommunityUpdate(!communityUpdate);
     }
   };
-  let isSavedByCurrentUser = palette.savedBy.includes(user.sub);
+  let isSavedByCurrentUser = false;
+  if (palette.savedBy) {
+    isSavedByCurrentUser = palette.savedBy.includes(user.sub);
+  }
 
   if (
     palette.public &&

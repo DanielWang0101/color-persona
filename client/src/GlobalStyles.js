@@ -5,7 +5,8 @@ export default createGlobalStyle`
     --color-divider:#d0d0d0;
     --color-loading:#d0d0d0;
     --color-link:#d0d0d0;
-
+    --color-dark-grey:#808080;
+    --color-light-grey:#f2f0f1;
     --color-dropdown-font:#000403;
     --card-border-color:hsla(0,6%,90%,0.65);
     --color-black-background: #000403;

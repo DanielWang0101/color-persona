@@ -7,11 +7,13 @@ import MiniSwatch from "./MiniSwatch";
 import DropDown from "./DropDown";
 import ToggleShare from "./ToggleShare";
 import { CurrentUserContext } from "../../Context/CurrentUserContext";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   Input,
   FlexColumn,
   FlexRow,
   Description,
+  FinePrint,
   Center,
   Cube,
   ColorList,
@@ -34,7 +36,7 @@ const Form = ({ setRule }) => {
   const [checked, setChecked] = useState(false);
   //state for notifications
   const [response, setResponse] = useState(null);
-
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
   return (
     <FlexColumn
       onSubmit={async (ev) => {
@@ -48,46 +50,75 @@ const Form = ({ setRule }) => {
         }
       }}
     >
-      <MiniSwatch
-        baseColor={baseColor}
-        colorA={colorA}
-        colorB={colorB}
-        colorD={colorD}
-        colorE={colorE}
-      />
+      <Center>
+        <MiniSwatch
+          style={{ margin: "0 auto" }}
+          baseColor={baseColor}
+          colorA={colorA}
+          colorB={colorB}
+          colorD={colorD}
+          colorE={colorE}
+        />
+      </Center>
       <Description>Save This Color Palette</Description>
-      <FlexRow>
-        Save to
-        <DropDown />
-        <PlusButton
-          onClick={(ev) => {
-            ev.preventDefault();
-            setToggle(!toggle);
-          }}
-        />
-      </FlexRow>
-      <FlexRow>
-        <span style={{ marginRight: "10px" }}> Name</span>
+      {
+        //if authenticated, return the form, otherwise return a sign in button
+        isAuthenticated ? (
+          <>
+            <FlexRow>
+              Save to
+              <DropDown />
+              <PlusButton
+                onClick={(ev) => {
+                  ev.preventDefault();
+                  setToggle(!toggle);
+                }}
+              />
+            </FlexRow>
+            <FlexRow>
+              <span style={{ marginRight: "10px" }}> Name</span>
 
-        <Input
-          style={{ width: "100%", margin: "0 0 0 0" }}
-          value={paletteName}
-          onChange={(ev) => {
-            setPaletteName(ev.target.value);
-          }}
-        />
-      </FlexRow>
-      <FlexRow>
-        <ToggleShare checked={checked} setChecked={setChecked} /> Publish to
-        Community
-      </FlexRow>
-      <CreateArchiveMenu
-        setToggle={setToggle}
-        toggle={toggle}
-        setResponse={setResponse}
-      />
-      <Notifications response={response} setResponse={setResponse} />
-      <Button style={{ marginLeft: "auto" }}>Save</Button>
+              <Input
+                style={{ width: "100%", margin: "0 0 0 0" }}
+                value={paletteName}
+                onChange={(ev) => {
+                  setPaletteName(ev.target.value);
+                }}
+              />
+            </FlexRow>
+            <FlexRow>
+              <ToggleShare checked={checked} setChecked={setChecked} /> Publish
+              to Community
+            </FlexRow>
+            <CreateArchiveMenu
+              setToggle={setToggle}
+              toggle={toggle}
+              setResponse={setResponse}
+            />
+            <Notifications response={response} setResponse={setResponse} />
+            <Button style={{ marginLeft: "auto" }}>Save</Button>
+          </>
+        ) : (
+          <>
+            <FinePrint>
+              Color wheel can be used to generate color palette, which can be
+              saved into your personal archive, after signing in.
+            </FinePrint>
+            <FinePrint>
+              You can then use your share color themes, or copy their hex code.
+            </FinePrint>
+            <Button
+              onClick={(ev) => {
+                ev.preventDefault();
+                loginWithRedirect();
+              }}
+              style={{ marginLeft: "auto" }}
+            >
+              Save
+            </Button>
+          </>
+        )
+      }
     </FlexColumn>
   );
 };

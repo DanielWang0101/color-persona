@@ -4,7 +4,7 @@ export const FlexRow = styled.div`
   /* width: 100%; */
   font-family: var(--font-body);
   font-size: var(--font-size-option);
-
+  margin-top: 10px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -19,22 +19,31 @@ export const FlexRow = styled.div`
 `;
 export const Description = styled.p`
   /* width: 100%; */
+  margin-bottom: 10px;
 
   color: grey;
 `;
 export const Center = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+`;
+
+export const FinePrint = styled.p`
+  font-size: var(--font-size-option);
+  color: var(--color-link);
+  margin-bottom: 10px;
+  text-align: justify;
 `;
 export const FlexColumn = styled.form`
-  /* width: 100%; */
+  width: 15vw;
   flex: 1 1 30%;
   display: flex;
   flex-flow: column nowrap;
   font-family: var(--font-body);
-  justify-content: space-evenly;
-  height: 300px;
+  justify-content: flex-start;
+  /* height: 300px; */
   font-size: 0.9rem;
 `;
 export const Cube = styled.div`
@@ -196,7 +205,7 @@ export const Container = styled.div`
   /* border: 1px solid black; */
   display: block;
   position: relative;
-  width: 64px;
+  width: 40px;
   height: 32px;
 `;
 
@@ -214,16 +223,16 @@ export const StyledBackdrop = styled.div`
 
 export const Ball = styled.div`
   position: absolute;
-  top: 0;
+  top: 6px;
   left: 0;
-  width: 26px;
-  height: 26px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background-color: ${({ checked }) => (checked ? "red" : "grey")};
+  background-color: ${({ checked }) =>
+    checked ? "var(--color-button-blue)" : "grey"};
   margin-top: 2px;
   transition: all 0.25s ease-out;
   ${ButtonToggle}:focus & {
-    box-shadow: 0px 0px 8px red;
-    outline: 2px solid white;
+    /* outline: 2px solid white; */
   }
 `;

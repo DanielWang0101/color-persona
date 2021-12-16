@@ -11,6 +11,7 @@ import {
   Background,
   ModalWrapper,
   ModalImg,
+  Avatar,
   ModalContent,
   SwatchUnit,
   CloseModalButton,
@@ -95,7 +96,12 @@ const Modal = ({ showModal, setShowModal, palette }) => {
                   })}
               </ModalWrapper>
               <ModalWrapperSub>
-                {palette.name && <ModalContent>{palette.name}</ModalContent>}
+                {palette.name && (
+                  <ModalContent>
+                    <Avatar src={palette.picture} />
+                    {palette.name}
+                  </ModalContent>
+                )}
                 <ModalButton
                   palette={palette}
                   setResponse={setResponse}
