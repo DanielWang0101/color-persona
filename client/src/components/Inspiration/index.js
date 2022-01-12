@@ -18,7 +18,7 @@ const Inspiration = () => {
           gallery.map((art) => {
             return (
               <div>
-                <img src={art.thumb} />
+                <img src={art.thumb} style={{ width: "180px" }} />
                 {art.colors && <MiniSwatch palette={art} />}
               </div>
             );

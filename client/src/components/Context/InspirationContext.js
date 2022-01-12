@@ -21,7 +21,7 @@ const InspirationProvider = ({ children }) => {
       const resp = await unsplash.search.getPhotos({
         query: "graphic art",
         page: page,
-        perPage: 3,
+        perPage: 15,
         // color: 'green',
         // orientation: 'portrait',
       });
