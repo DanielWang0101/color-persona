@@ -98,11 +98,12 @@ const ModalButton = ({
     }
   };
   let isSavedByCurrentUser = false;
-  if (palette.savedBy) {
+  if (user && palette.savedBy) {
     isSavedByCurrentUser = palette.savedBy.includes(user.sub);
   }
 
   if (
+    user &&
     palette.public &&
     palette.user !== user.sub && //dont save user's own post
     palette.user &&
@@ -116,6 +117,7 @@ const ModalButton = ({
       </>
     );
   } else if (
+    user &&
     palette.shared !== true &&
     palette.public !== true &&
     palette.user === user.sub &&
